@@ -27,7 +27,7 @@
 | RUN-010 | 2026-07-27 | Documentation | Generate a run-bound Wave 1 Office review pack | Office generator, manifest, XLSX/PPTX/DOCX | 5 reporting tests; OOXML integrity; library reopen and cross-value checks | Excel 8 sheets; PPT 7 slides/2 charts; Word 11 headings/7 tables | RPT-001 open | Independent Gate 5 |
 | RUN-011 | 2026-07-27 | Validation | Independently reopen and reconcile every Wave 1 Office artifact | Office validation report and Gate 5 packet | tamper/mixed-run/no-overwrite tests; `make gate5` | mismatch 0; unresolved claims 0/6; Gate 5 pass | human approval pending | Update evidence map |
 | RUN-012 | 2026-07-27 | Documentation / Knowledge | Answer six governed traceability questions without free-form SQL or numerical generation | code+YAML allowlist, query CLI, Wiki contract | 14 knowledge tests; all six CLI queries | six evidence-cited answers; Wave 2 blocked status preserved | semantic search/LLM deferred | Final regression |
-| RUN-013 | 2026-07-27 | Orchestrator / Documentation | Reframe the completed project as a 30-second EY FSRM hiring evidence package and close the internal checkpoint | README, final/handoff docs, recruiter-facing SVG, SVG drift tests, governance state | headless SVG render review; `python -m pytest -q`; Ruff; compile; scaffold/governance; `make gate0 gate1 gate2 gate3 gate5`; final PostgreSQL readback | SVG had no visible clipping/overlap; 63 tests passed; Gates 0–3 and 5 passed; DB readback matched 30,000/180,000, 16 reconciliation passes, 15 DQ passes, 3 warnings, 0 failures | Gate 4 remains blocked; RPT-001 and human publication approval pending | Stop temporary PostgreSQL and hand off exact review commands |
+| RUN-013 | 2026-07-27 | Orchestrator / Documentation | Reframe the completed project as a 30-second EY FSRM hiring evidence package and close the internal checkpoint | README, final/handoff docs, recruiter-facing SVG, SVG drift tests, governance state | headless SVG render review; `python -m pytest -q`; Ruff; compile; scaffold/governance; `make gate0 gate1 gate2 gate3 gate5`; final PostgreSQL readback; `pg_ctl stop` | SVG had no visible clipping/overlap; 63 tests passed; Gates 0–3 and 5 passed; DB readback matched 30,000/180,000, 16 reconciliation passes, 15 DQ passes, 3 warnings, 0 failures; temporary PostgreSQL stopped cleanly | Gate 4 remains blocked; RPT-001 and human publication approval pending | Hand off exact human review commands |
 
 ## Verified Wave 1 execution summary
 
@@ -73,9 +73,10 @@ Gate 5 establishes internal cross-artifact consistency. It does not replace the
 pending human publication approval or the unrun LibreOffice visual-layout
 inspection.
 
-The PostgreSQL process used for this run is a reversible unpacked local runtime
-under `/tmp`; Docker remains the canonical clean-environment command. No
-system package, external listener, secret, push, or deployment was used.
+The PostgreSQL process used for this run was a reversible unpacked local runtime
+under `/tmp` and was stopped after final readback; Docker remains the canonical
+clean-environment command. No system package, external listener, secret, push,
+or deployment was used.
 
 The README evidence-map SVG is a presentation layer, not a numerical authority.
 `tests/reporting/test_fsrm_portfolio_evidence_map.py` binds its run ID, population,
