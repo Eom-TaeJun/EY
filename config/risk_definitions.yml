@@ -2,24 +2,66 @@ version: 0.1.0
 outcome:
   target_name: next_month_default
   source_definition: dataset_provided_binary_target
+  observation_date: 2005-09-30
+  warning: Outcome is used only for validation, never in signal or band construction.
 signals:
   recent_max_delinquency:
-    status: planned
+    status: active
     window_months: 3
-  delinquent_months:
-    status: planned
+    economic_rationale: Recent severe repayment delay indicates short-horizon repayment distress.
+    observation_timing: Maximum non-negative repayment status from July-September 2005.
+    timing_status: pass
+    leakage_status: pass
+  delinquent_months_6m:
+    status: active
     window_months: 6
+    economic_rationale: Persistent positive delinquency codes indicate recurring repayment difficulty.
+    observation_timing: Count of positive repayment statuses from April-September 2005.
+    timing_status: pass
+    leakage_status: pass
   delinquency_deterioration:
-    status: planned
+    status: active
+    economic_rationale: Recent severity above earlier severity indicates worsening repayment behavior.
+    observation_timing: Recent three-month maximum minus earlier three-month maximum at 2005-09-30.
+    timing_status: pass
+    leakage_status: pass
   latest_utilization_ratio:
-    status: planned
+    status: active
+    economic_rationale: A latest bill near or above the credit limit indicates limited liquidity buffer.
+    observation_timing: September 2005 bill divided by the approved credit limit.
+    timing_status: pass
+    leakage_status: pass
   payment_coverage_ratio:
-    status: planned
+    status: active
+    economic_rationale: Low payment relative to the prior positive bill indicates weak near-term repayment capacity.
+    observation_timing: September 2005 payment divided by August 2005 bill when the bill is positive.
+    timing_status: pass
+    leakage_status: pass
   zero_payment_streak:
-    status: planned
+    status: active
+    economic_rationale: Consecutive zero-payment months may indicate sustained payment stress.
+    observation_timing: Longest consecutive zero-payment streak from April-September 2005.
+    timing_status: pass
+    leakage_status: pass
   recent_bill_growth:
-    status: planned
+    status: active
+    economic_rationale: A rising bill may indicate increasing balance pressure, subject to empirical contradiction review.
+    observation_timing: September versus June 2005 bill change divided by the absolute June bill.
+    timing_status: pass
+    leakage_status: pass
 risk_band:
   method: explainable_rule_first
-  thresholds: decision_required
+  definition_version: 0.1.0
+  thresholds:
+    low: 0-1 points
+    medium: 2-3 points
+    high: 4+ points
+  point_rules:
+    recent_max_delinquency: 1 point at 1; 2 points at 2+
+    delinquent_months_6m: 1 point at 1; 2 points at 2+
+    delinquency_deterioration: 1 point at 2+
+    latest_utilization_ratio: 1 point at 1.0+
+    payment_coverage_ratio: 1 point below 0.10 when applicable
+    zero_payment_streak: 1 point at 2+
+    recent_bill_growth: 1 point at 0.25+
   warning: Do not select thresholds solely to maximize observed separation.
