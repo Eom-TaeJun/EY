@@ -19,11 +19,23 @@ __pycache__/
 /data/processed/*
 !/data/processed/.gitkeep
 
-# Outputs and logs
+# Outputs and logs: retain small audit evidence, not large derived binaries
 /outputs/*
-!/outputs/.gitkeep
+!/outputs/qa/
+!/outputs/final/
+/outputs/qa/*
+!/outputs/qa/*.json
+!/outputs/qa/attempts/
+!/outputs/qa/attempts/**
+!/outputs/qa/validated/
+!/outputs/qa/validated/**
+/outputs/final/*
+!/outputs/final/*.json
+!/outputs/final/*.md
 /logs/*
-!/logs/.gitkeep
+!/logs/ingestion/
+/logs/ingestion/*
+!/logs/ingestion/*.json
 
 # Local database and office temp files
 *.db

@@ -5,6 +5,7 @@ description = "Traceable credit-risk SQL and validation harness"
 requires-python = ">=3.11"
 dependencies = [
   "pandas>=2.2",
+  "xlrd>=2.0",
   "sqlalchemy>=2.0",
   "psycopg[binary]>=3.2",
   "pydantic>=2.8",

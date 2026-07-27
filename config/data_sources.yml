@@ -1,14 +1,127 @@
 sources:
   - source_id: uci_default_credit_card_clients
+    provider: UCI Machine Learning Repository
+    dataset_id: 350
+    title: Default of Credit Card Clients
     phase: wave_1
     role: primary_mvp_dataset
-    status: planned
+    status: loaded_reconciled_idempotency_verified
+    landing_page_url: >-
+      https://archive.ics.uci.edu/dataset/350/default+of+credit+card+clients
+    download_url: >-
+      https://archive.ics.uci.edu/static/public/350/default%2Bof%2Bcredit%2Bcard%2Bclients.zip
+    doi: 10.24432/C55S3H
+    citation: >-
+      Yeh, I. (2009). Default of Credit Card Clients [Dataset].
+      UCI Machine Learning Repository.
+    license:
+      name: Creative Commons Attribution 4.0 International
+      identifier: CC-BY-4.0
+      url: https://creativecommons.org/licenses/by/4.0/
+      access: public_download
+    archive:
+      path: data/raw/default+of+credit+card+clients.zip
+      bytes: 5539494
+      sha256: 56c885f84457f6680f8438f02bfcdac9579323d8a94465ee5f26e32baa727602
+      member: default of credit card clients.xls
+    file:
+      path: data/raw/default of credit card clients.xls
+      bytes: 5539328
+      sha256: 30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933
+      format: Excel 97-2003 Workbook
+      worksheet: Data
+      physical_rows_including_headers: 30002
+      header_rows: 2
+      data_rows: 30000
+      columns: 25
+      source_variable_header:
+        - ""
+        - X1
+        - X2
+        - X3
+        - X4
+        - X5
+        - X6
+        - X7
+        - X8
+        - X9
+        - X10
+        - X11
+        - X12
+        - X13
+        - X14
+        - X15
+        - X16
+        - X17
+        - X18
+        - X19
+        - X20
+        - X21
+        - X22
+        - X23
+        - Y
+      source_field_header:
+        - ID
+        - LIMIT_BAL
+        - SEX
+        - EDUCATION
+        - MARRIAGE
+        - AGE
+        - PAY_0
+        - PAY_2
+        - PAY_3
+        - PAY_4
+        - PAY_5
+        - PAY_6
+        - BILL_AMT1
+        - BILL_AMT2
+        - BILL_AMT3
+        - BILL_AMT4
+        - BILL_AMT5
+        - BILL_AMT6
+        - PAY_AMT1
+        - PAY_AMT2
+        - PAY_AMT3
+        - PAY_AMT4
+        - PAY_AMT5
+        - PAY_AMT6
+        - default payment next month
     expected_rows: 30000
+    observed_rows: 30000
+    observed_columns: 25
     expected_history_months: 6
+    ingestion:
+      loader: src/ingestion/load_uci_credit_card.py
+      ddl: sql/ingestion/001_raw_credit_card_client.sql
+      target: raw.credit_card_client
+      parser_dependency: xlrd>=2.0
+      mode: insert_only_idempotent
+      initial_load:
+        run_id: uci350-raw-load-20260727-001
+        evidence_log: logs/ingestion/uci350-raw-load-20260727-001.json
+        completed_at_utc: "2026-07-27T12:15:02.155785+00:00"
+        source_rows: 30000
+        staged_rows: 30000
+        inserted_rows: 30000
+        existing_matching_rows: 0
+        raw_source_rows: 30000
+        rejected_rows: 0
+      idempotency_check:
+        run_id: uci350-raw-load-20260727-002
+        evidence_log: logs/ingestion/uci350-raw-load-20260727-002.json
+        completed_at_utc: "2026-07-27T12:15:10.973535+00:00"
+        source_rows: 30000
+        staged_rows: 30000
+        inserted_rows: 0
+        existing_matching_rows: 30000
+        raw_source_rows: 30000
+        rejected_rows: 0
     notes:
       - Preserve the downloaded file and record its hash.
       - Use it for PD-related behavioral risk signals only.
       - Do not claim LGD, EAD, or full IFRS 9 reproduction.
+      - The workbook has two header rows; data begin on spreadsheet row 3.
+      - PostgreSQL raw ingestion and a zero-insert idempotency rerun are verified.
   - source_id: future_loan_performance_dataset
     phase: wave_2_or_later
     role: lgd_ead_and_macro_extension
