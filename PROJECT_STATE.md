@@ -2,20 +2,21 @@
 
 ## Current status
 
-- Active Wave: `Wave 0 → Wave 1`
+- Active Wave: `Wave 1 — source and ingestion`
 - Portfolio deadline mode: `same-day critical path with parallel extensions`
 - Primary dataset for first implementation: `UCI Default of Credit Card Clients`
 - Target database: `PostgreSQL`
-- Current objective: establish governance, ingest source data, build the customer-month table, run SQL QA, and produce risk-signal summaries.
+- Current objective: register and ingest the approved UCI source without changing
+  values, pass Gate 1, then build the customer-month table.
 
 ## Critical path
 
-- [ ] Confirm repository scaffold
+- [x] Confirm repository scaffold
 - [ ] Register source and license
 - [ ] Create raw schema and ingestion run
 - [ ] Load source without changing values
 - [ ] Split borrower and account-month structures
-- [ ] Reconcile 30,000 borrowers and expected 180,000 customer-month rows
+- [ ] Reconcile expected (not yet verified) 30,000 borrowers and 180,000 customer-month rows
 - [ ] Run data-quality and business-rule SQL tests
 - [ ] Build initial behavioral risk signals
 - [ ] Compare observed default rate by signal and risk band
@@ -42,12 +43,12 @@
 
 | Field | Value |
 |---|---|
-| checkpoint_id | CP-000 |
-| date | YYYY-MM-DD |
-| owner | Human |
-| completed | Repository scaffold created |
-| blockers | Source not yet ingested |
-| next action | Run Wave 0 review, then Hermes Wave 1 packet |
+| checkpoint_id | CP-002 |
+| date | 2026-07-27 |
+| owner | Orchestrator |
+| completed | Gate 0 approved after independent review; Critical 0 and Major 0 |
+| blockers | Official source not yet acquired or ingested |
+| next action | Execute the Hermes Wave 1 source registration and raw-ingestion packet |
 
 ## Update rule
 

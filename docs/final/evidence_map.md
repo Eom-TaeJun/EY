@@ -9,5 +9,6 @@
 | Process improvement | Harness, gates, issue and decision logs | Can improve repeatability and control |
 | Project support | task graph, work status, handoff guide | Can work within a team and leave traceable progress |
 | Integrity and relationships | immutable sources, limitations, independent validation | Does not hide uncertainty or alter evidence |
+| Governance and controlled delivery | `make gate0`, executable Gate 1–5 interfaces, single-writer ownership, independent G0 review | Can separate build, validation, approval, and rework responsibilities |
 
 Add verified numerical evidence only after Gate 5.

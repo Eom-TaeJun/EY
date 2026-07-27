@@ -41,7 +41,7 @@ Do not load every document indiscriminately. Follow the indexes.
 
 Use the loop:
 
-`Inspect → Plan → Implement → Test → Critique → Reconcile → Checkpoint`
+`Inspect → Plan → Implement → Test → Critique → Reconcile → Checkpoint → Approve or Revise`
 
 At the start, state:
 

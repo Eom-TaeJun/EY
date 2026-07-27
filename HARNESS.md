@@ -131,6 +131,9 @@ Each task follows:
 5. Critique — search for leakage, invalid assumptions, and scope drift
 6. Reconcile — compare source, database, code, and report outputs
 7. Checkpoint — update state, decisions, issues, and next actions
+8. Approve or Revise — an independent role recommends release or returns the
+   task to the responsible builder; human approval remains mandatory where
+   Section 5 requires it
 
 ## 9. Quality gates
 

@@ -7,6 +7,8 @@ Each role has bounded authority and file ownership.
 - `data_model.md`
 - `sql_qa.md`
 - `risk_signal.md`
+- `risk_component.md`
+- `graph.md`
 - `validation.md`
 - `documentation.md`
 - `reviewer.md`

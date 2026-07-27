@@ -29,6 +29,8 @@ Transport source data into the raw layer without changing its economic meaning o
 - `src/ingestion/`
 - `sql/ingestion/`
 - `logs/ingestion/`
+- `config/data_sources.yml`
+- `docs/data/source_registry.md`
 - source and ingestion sections of `audit`
 
 ## Required output packet
