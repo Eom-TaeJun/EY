@@ -15,6 +15,7 @@ mixing their meanings or introducing a second database without approval.
 ## Owned paths
 
 - `sql/ddl/030_meta_graph.sql`
+- `sql/ddl/031_wave1_lineage.sql`
 - graph sections of `docs/data/lineage_spec.md`
 - `tests/graph/`
 

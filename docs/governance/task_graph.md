@@ -43,11 +43,11 @@ cross-owned changes are returned to the path owner instead of edited in place.
 |---|---|---|
 | Orchestrator | `PROJECT_STATE.md`, `docs/governance/{task_graph,decision_ledger,issue_log,work_status}.md` | all role packets |
 | Hermes | `data/raw/`, `src/ingestion/`, `sql/ingestion/`, `logs/ingestion/`, `config/data_sources.yml`, `docs/data/source_registry.md`, source-ingestion audit rows | Data Model consumes reconciled raw only |
-| Data Model | `sql/ddl/` except `030_meta_graph.sql`, `sql/staging/`, `docs/data/{logical_data_model,data_dictionary}.md` | Hermes reconciliation |
+| Data Model | `sql/ddl/` except `030_meta_graph.sql` and `031_wave1_lineage.sql`, `sql/staging/`, `docs/data/{logical_data_model,data_dictionary}.md` | Hermes reconciliation |
 | SQL QA | `sql/quality/`, `sql/business_rules/`, `sql/reconciliation/`, `tests/data_quality/`, `docs/validation/{test_catalog,reconciliation_plan}.md` | Data Model definitions |
 | Risk Signal | `sql/features/`, `src/features/`, `docs/methodology/{signal_dictionary,transmission_paths}.md` | Gate 2 evidence |
 | Risk Component | `sql/risk_components/`, `src/models/`, `config/scenarios.yml`, `docs/methodology/risk_component_scope.md` | Gate 3 evidence |
-| Graph | `sql/ddl/030_meta_graph.sql`, graph sections of `docs/data/lineage_spec.md`, `tests/graph/` | approved types; validated runs for result links |
+| Graph | `sql/ddl/030_meta_graph.sql`, `sql/ddl/031_wave1_lineage.sql`, graph sections of `docs/data/lineage_spec.md`, `tests/graph/` | approved types; validated runs for result links |
 | Validation | `src/validation/`, `tests/integration/`, `tests/regression/`, `docs/validation/model_validation_plan.md`, `outputs/qa/` | builder output; does not edit builder paths |
 | Documentation | `README.md`, `docs/wiki/`, `docs/final/`, `presentation/`, report-generation code under `src/reporting/` | validated run outputs only |
 | Reviewer | no builder path; issue reports only | all evidence, read-only |
