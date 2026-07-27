@@ -22,19 +22,19 @@ gate0:
 	python scripts/validate_governance.py
 
 gate1:
-	python scripts/check_gate.py --gate 1
+	python -m scripts.check_gate --gate 1 --packet-directory outputs/qa/validated/latest
 
 gate2:
-	python scripts/check_gate.py --gate 2
+	python -m scripts.check_gate --gate 2 --packet-directory outputs/qa/validated/latest
 
 gate3:
-	python scripts/check_gate.py --gate 3
+	python -m scripts.check_gate --gate 3 --packet-directory outputs/qa/validated/latest
 
 gate4:
-	python scripts/check_gate.py --gate 4
+	python -m scripts.check_gate --gate 4 --packet-directory outputs/qa/validated/latest
 
 gate5:
-	python scripts/check_gate.py --gate 5
+	python -m scripts.check_gate --gate 5 --packet-directory outputs/qa/validated/latest
 
 test:
-	pytest -q
+	python -m pytest -q

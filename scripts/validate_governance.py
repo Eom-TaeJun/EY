@@ -90,7 +90,7 @@ def main() -> int:
         "gate3:",
         "gate4:",
         "gate5:",
-        "scripts/check_gate.py",
+        "scripts.check_gate",
     )
 
     if failures:

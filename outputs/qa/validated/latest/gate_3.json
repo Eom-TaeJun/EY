@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "gate": 3,
+  "run_id": "W1-20260727-001",
+  "generated_at": "2026-07-27T12:24:26.408112+00:00",
+  "producer": {
+    "role": "Validation",
+    "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+  },
+  "status": "pass",
+  "checks": [
+    {
+      "check_id": "signal_count",
+      "status": "pass",
+      "evidence": {
+        "count": 7
+      }
+    },
+    {
+      "check_id": "definition_version",
+      "status": "pass",
+      "evidence": {
+        "version": "0.1.0"
+      }
+    },
+    {
+      "check_id": "observation_timing",
+      "status": "pass",
+      "evidence": {
+        "reviewed_count": 7,
+        "violation_count": 0
+      }
+    },
+    {
+      "check_id": "leakage",
+      "status": "pass",
+      "evidence": {
+        "reviewed_count": 7,
+        "violation_count": 0
+      }
+    },
+    {
+      "check_id": "outcome_summary",
+      "status": "pass",
+      "evidence": {
+        "summary_row_count": 23,
+        "signals_with_summary": 7,
+        "invalid_summary_count": 0,
+        "risk_band_row_count": 3,
+        "portfolio_default_count": 6636,
+        "risk_band_default_count": 6636
+      }
+    },
+    {
+      "check_id": "sql_reproducibility",
+      "status": "pass",
+      "evidence": {
+        "reproducible_signal_count": 7,
+        "unreproducible_count": 0,
+        "query_manifest": "sql/features/MANIFEST.md"
+      }
+    }
+  ]
+}

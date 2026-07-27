@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "gate": 2,
+  "run_id": "W1-20260727-001",
+  "generated_at": "2026-07-27T12:24:26.408112+00:00",
+  "producer": {
+    "role": "Validation",
+    "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+  },
+  "status": "pass",
+  "checks": [
+    {
+      "check_id": "primary_key",
+      "status": "pass",
+      "evidence": {
+        "duplicate_count": 0,
+        "null_key_count": 0,
+        "account_month_duplicate_count": 0
+      }
+    },
+    {
+      "check_id": "foreign_key",
+      "status": "pass",
+      "evidence": {
+        "orphan_count": 0
+      }
+    },
+    {
+      "check_id": "wide_to_long_rows",
+      "status": "pass",
+      "evidence": {
+        "raw_rows": 30000,
+        "borrower_rows": 30000,
+        "months_per_borrower": 6,
+        "expected_account_month_rows": 180000,
+        "account_month_rows": 180000,
+        "difference": 0
+      }
+    },
+    {
+      "check_id": "bill_amounts",
+      "status": "pass",
+      "evidence": {
+        "source_total": "8095850136",
+        "derived_total": "8095850136",
+        "difference": "0"
+      }
+    },
+    {
+      "check_id": "payment_amounts",
+      "status": "pass",
+      "evidence": {
+        "source_total": "949541777",
+        "derived_total": "949541777",
+        "difference": "0"
+      }
+    },
+    {
+      "check_id": "code_domains",
+      "status": "pass",
+      "evidence": {
+        "invalid_count": 0,
+        "missing_required_count": 0
+      }
+    },
+    {
+      "check_id": "sql_test_suite",
+      "status": "pass",
+      "evidence": {
+        "executed_count": 15,
+        "failed_count": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,409 @@
+{
+  "schema_version": "1.0",
+  "run_id": "W1-20260727-001",
+  "generated_at": "2026-07-27T12:24:26.408112+00:00",
+  "status": "pass",
+  "issues": [],
+  "gate_packets": [
+    {
+      "schema_version": "1.0",
+      "gate": 1,
+      "run_id": "W1-20260727-001",
+      "generated_at": "2026-07-27T12:24:26.408112+00:00",
+      "producer": {
+        "role": "Validation",
+        "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+      },
+      "status": "pass",
+      "checks": [
+        {
+          "check_id": "source_registered",
+          "status": "pass",
+          "evidence": {
+            "registered": true,
+            "source_id": "uci_default_credit_card_clients",
+            "registry_path": "docs/data/source_registry.md"
+          }
+        },
+        {
+          "check_id": "sha256_recorded",
+          "status": "pass",
+          "evidence": {
+            "sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933"
+          }
+        },
+        {
+          "check_id": "source_shape_recorded",
+          "status": "pass",
+          "evidence": {
+            "source_rows": 30000,
+            "source_columns": 25
+          }
+        },
+        {
+          "check_id": "raw_rows_reconciled",
+          "status": "pass",
+          "evidence": {
+            "source_rows": 30000,
+            "raw_rows": 30000,
+            "difference": 0,
+            "unlogged_rejects": 0
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "gate": 2,
+      "run_id": "W1-20260727-001",
+      "generated_at": "2026-07-27T12:24:26.408112+00:00",
+      "producer": {
+        "role": "Validation",
+        "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+      },
+      "status": "pass",
+      "checks": [
+        {
+          "check_id": "primary_key",
+          "status": "pass",
+          "evidence": {
+            "duplicate_count": 0,
+            "null_key_count": 0,
+            "account_month_duplicate_count": 0
+          }
+        },
+        {
+          "check_id": "foreign_key",
+          "status": "pass",
+          "evidence": {
+            "orphan_count": 0
+          }
+        },
+        {
+          "check_id": "wide_to_long_rows",
+          "status": "pass",
+          "evidence": {
+            "raw_rows": 30000,
+            "borrower_rows": 30000,
+            "months_per_borrower": 6,
+            "expected_account_month_rows": 180000,
+            "account_month_rows": 180000,
+            "difference": 0
+          }
+        },
+        {
+          "check_id": "bill_amounts",
+          "status": "pass",
+          "evidence": {
+            "source_total": "8095850136",
+            "derived_total": "8095850136",
+            "difference": "0"
+          }
+        },
+        {
+          "check_id": "payment_amounts",
+          "status": "pass",
+          "evidence": {
+            "source_total": "949541777",
+            "derived_total": "949541777",
+            "difference": "0"
+          }
+        },
+        {
+          "check_id": "code_domains",
+          "status": "pass",
+          "evidence": {
+            "invalid_count": 0,
+            "missing_required_count": 0
+          }
+        },
+        {
+          "check_id": "sql_test_suite",
+          "status": "pass",
+          "evidence": {
+            "executed_count": 15,
+            "failed_count": 0
+          }
+        }
+      ]
+    },
+    {
+      "schema_version": "1.0",
+      "gate": 3,
+      "run_id": "W1-20260727-001",
+      "generated_at": "2026-07-27T12:24:26.408112+00:00",
+      "producer": {
+        "role": "Validation",
+        "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+      },
+      "status": "pass",
+      "checks": [
+        {
+          "check_id": "signal_count",
+          "status": "pass",
+          "evidence": {
+            "count": 7
+          }
+        },
+        {
+          "check_id": "definition_version",
+          "status": "pass",
+          "evidence": {
+            "version": "0.1.0"
+          }
+        },
+        {
+          "check_id": "observation_timing",
+          "status": "pass",
+          "evidence": {
+            "reviewed_count": 7,
+            "violation_count": 0
+          }
+        },
+        {
+          "check_id": "leakage",
+          "status": "pass",
+          "evidence": {
+            "reviewed_count": 7,
+            "violation_count": 0
+          }
+        },
+        {
+          "check_id": "outcome_summary",
+          "status": "pass",
+          "evidence": {
+            "summary_row_count": 23,
+            "signals_with_summary": 7,
+            "invalid_summary_count": 0,
+            "risk_band_row_count": 3,
+            "portfolio_default_count": 6636,
+            "risk_band_default_count": 6636
+          }
+        },
+        {
+          "check_id": "sql_reproducibility",
+          "status": "pass",
+          "evidence": {
+            "reproducible_signal_count": 7,
+            "unreproducible_count": 0,
+            "query_manifest": "sql/features/MANIFEST.md"
+          }
+        }
+      ]
+    }
+  ],
+  "contract_reports": [
+    {
+      "gate": 1,
+      "run_id": "W1-20260727-001",
+      "valid": true,
+      "issues": []
+    },
+    {
+      "gate": 2,
+      "run_id": "W1-20260727-001",
+      "valid": true,
+      "issues": []
+    },
+    {
+      "gate": 3,
+      "run_id": "W1-20260727-001",
+      "valid": true,
+      "issues": []
+    }
+  ],
+  "verified_findings": {
+    "source_rows": 30000,
+    "raw_rows": 30000,
+    "borrower_rows": 30000,
+    "account_month_rows": 180000,
+    "sql_test_count": 15,
+    "sql_failed_count": 0,
+    "signal_outcomes": [
+      {
+        "signal_id": "delinquency_deterioration",
+        "bucket": "<=0",
+        "sample_count": 24569,
+        "default_count": 4464,
+        "observed_default_rate": "0.1816923765721030566974642843"
+      },
+      {
+        "signal_id": "delinquency_deterioration",
+        "bucket": "1",
+        "sample_count": 2080,
+        "default_count": 669,
+        "observed_default_rate": "0.3216346153846153846153846154"
+      },
+      {
+        "signal_id": "delinquency_deterioration",
+        "bucket": "2+",
+        "sample_count": 3351,
+        "default_count": 1503,
+        "observed_default_rate": "0.4485228290062667860340196956"
+      },
+      {
+        "signal_id": "delinquent_months_6m",
+        "bucket": "0",
+        "sample_count": 19931,
+        "default_count": 2334,
+        "observed_default_rate": "0.1171040088304651046109076313"
+      },
+      {
+        "signal_id": "delinquent_months_6m",
+        "bucket": "1",
+        "sample_count": 4426,
+        "default_count": 1320,
+        "observed_default_rate": "0.2982376863985539990962494352"
+      },
+      {
+        "signal_id": "delinquent_months_6m",
+        "bucket": "2+",
+        "sample_count": 5643,
+        "default_count": 2982,
+        "observed_default_rate": "0.5284423179160021265284423179"
+      },
+      {
+        "signal_id": "latest_utilization_ratio",
+        "bucket": "<0.80",
+        "sample_count": 22020,
+        "default_count": 4503,
+        "observed_default_rate": "0.2044959128065395095367847411"
+      },
+      {
+        "signal_id": "latest_utilization_ratio",
+        "bucket": "0.80-<1.00",
+        "sample_count": 5857,
+        "default_count": 1495,
+        "observed_default_rate": "0.2552501280519037049684138638"
+      },
+      {
+        "signal_id": "latest_utilization_ratio",
+        "bucket": ">=1.00",
+        "sample_count": 2123,
+        "default_count": 638,
+        "observed_default_rate": "0.3005181347150259067357512953"
+      },
+      {
+        "signal_id": "payment_coverage_ratio",
+        "bucket": "not_applicable",
+        "sample_count": 3175,
+        "default_count": 744,
+        "observed_default_rate": "0.2343307086614173228346456693"
+      },
+      {
+        "signal_id": "payment_coverage_ratio",
+        "bucket": "<0.10",
+        "sample_count": 14912,
+        "default_count": 3873,
+        "observed_default_rate": "0.2597237124463519313304721030"
+      },
+      {
+        "signal_id": "payment_coverage_ratio",
+        "bucket": "0.10-<0.50",
+        "sample_count": 4332,
+        "default_count": 953,
+        "observed_default_rate": "0.2199907663896583564173591874"
+      },
+      {
+        "signal_id": "payment_coverage_ratio",
+        "bucket": ">=0.50",
+        "sample_count": 7581,
+        "default_count": 1066,
+        "observed_default_rate": "0.1406146946313151299300883788"
+      },
+      {
+        "signal_id": "recent_bill_growth",
+        "bucket": "not_applicable",
+        "sample_count": 3195,
+        "default_count": 781,
+        "observed_default_rate": "0.2444444444444444444444444444"
+      },
+      {
+        "signal_id": "recent_bill_growth",
+        "bucket": "<=0",
+        "sample_count": 13347,
+        "default_count": 3447,
+        "observed_default_rate": "0.2582602832097100472016183412"
+      },
+      {
+        "signal_id": "recent_bill_growth",
+        "bucket": "0-<0.25",
+        "sample_count": 4671,
+        "default_count": 993,
+        "observed_default_rate": "0.2125883108542068079640333976"
+      },
+      {
+        "signal_id": "recent_bill_growth",
+        "bucket": ">=0.25",
+        "sample_count": 8787,
+        "default_count": 1415,
+        "observed_default_rate": "0.1610333447137817229998861955"
+      },
+      {
+        "signal_id": "recent_max_delinquency",
+        "bucket": "0",
+        "sample_count": 21560,
+        "default_count": 2700,
+        "observed_default_rate": "0.1252319109461966604823747681"
+      },
+      {
+        "signal_id": "recent_max_delinquency",
+        "bucket": "1",
+        "sample_count": 1779,
+        "default_count": 454,
+        "observed_default_rate": "0.2551995503091624508150646431"
+      },
+      {
+        "signal_id": "recent_max_delinquency",
+        "bucket": "2+",
+        "sample_count": 6661,
+        "default_count": 3482,
+        "observed_default_rate": "0.5227443326827803633088124906"
+      },
+      {
+        "signal_id": "zero_payment_streak",
+        "bucket": "0",
+        "sample_count": 15458,
+        "default_count": 2151,
+        "observed_default_rate": "0.1391512485444430068572907233"
+      },
+      {
+        "signal_id": "zero_payment_streak",
+        "bucket": "1",
+        "sample_count": 8247,
+        "default_count": 2752,
+        "observed_default_rate": "0.3336971019764762944100885170"
+      },
+      {
+        "signal_id": "zero_payment_streak",
+        "bucket": "2+",
+        "sample_count": 6295,
+        "default_count": 1733,
+        "observed_default_rate": "0.2752978554408260524225575854"
+      }
+    ],
+    "risk_band_outcomes": [
+      {
+        "signal_id": null,
+        "risk_band": "Low",
+        "sample_count": 14952,
+        "default_count": 1748,
+        "observed_default_rate": "0.1169074371321562332798287854"
+      },
+      {
+        "signal_id": null,
+        "risk_band": "Medium",
+        "sample_count": 8138,
+        "default_count": 1339,
+        "observed_default_rate": "0.1645367412140575079872204473"
+      },
+      {
+        "signal_id": null,
+        "risk_band": "High",
+        "sample_count": 6910,
+        "default_count": 3549,
+        "observed_default_rate": "0.5136034732272069464544138929"
+      }
+    ]
+  }
+}

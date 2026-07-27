@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "gate": 1,
+  "run_id": "W1-20260727-001",
+  "generated_at": "2026-07-27T12:24:26.408112+00:00",
+  "producer": {
+    "role": "Validation",
+    "command": "python -m src.validation.wave1_reproduction --snapshot <snapshot.json> --output <validation.json>"
+  },
+  "status": "pass",
+  "checks": [
+    {
+      "check_id": "source_registered",
+      "status": "pass",
+      "evidence": {
+        "registered": true,
+        "source_id": "uci_default_credit_card_clients",
+        "registry_path": "docs/data/source_registry.md"
+      }
+    },
+    {
+      "check_id": "sha256_recorded",
+      "status": "pass",
+      "evidence": {
+        "sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933"
+      }
+    },
+    {
+      "check_id": "source_shape_recorded",
+      "status": "pass",
+      "evidence": {
+        "source_rows": 30000,
+        "source_columns": 25
+      }
+    },
+    {
+      "check_id": "raw_rows_reconciled",
+      "status": "pass",
+      "evidence": {
+        "source_rows": 30000,
+        "raw_rows": 30000,
+        "difference": 0,
+        "unlogged_rejects": 0
+      }
+    }
+  ]
+}

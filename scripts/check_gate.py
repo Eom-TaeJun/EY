@@ -12,6 +12,12 @@ import json
 from pathlib import Path
 from typing import Any
 
+from src.validation.gate_evidence import (
+    GateEvidenceValidator,
+    load_json_object,
+    load_thresholds,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 REQUIRED_CHECKS = {
@@ -43,9 +49,14 @@ def load_packet(path: Path) -> dict[str, Any] | None:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--gate", required=True, type=int, choices=range(1, 6))
+    parser.add_argument(
+        "--packet-directory",
+        type=Path,
+        default=ROOT / "outputs" / "qa" / "validated" / "latest",
+    )
     args = parser.parse_args()
 
-    path = ROOT / "outputs" / "qa" / f"gate_{args.gate}.json"
+    path = args.packet_directory / f"gate_{args.gate}.json"
     if not path.exists():
         return fail(f"Gate {args.gate} evidence is missing: {path}")
 
@@ -78,7 +89,21 @@ def main() -> int:
     if failed:
         return fail(f"checks failed or lack evidence: {', '.join(failed)}")
 
-    print(f"Gate {args.gate} evidence packet passed structural validation: {path}")
+    try:
+        strict_packet = load_json_object(path)
+        thresholds = load_thresholds(ROOT / "config/validation_thresholds.yml")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        return fail(f"cannot load strict gate contract: {exc}")
+    report = GateEvidenceValidator(
+        thresholds,
+        artifact_root=ROOT,
+    ).validate(strict_packet, expected_gate=args.gate)
+    if not report.valid:
+        for issue in report.issues:
+            print(f"FAIL: {issue.code} at {issue.path}: {issue.message}")
+        return 1
+
+    print(f"Gate {args.gate} evidence packet passed semantic validation: {path}")
     return 0
 
 

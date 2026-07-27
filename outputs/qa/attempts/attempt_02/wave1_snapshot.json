@@ -1,0 +1,436 @@
+{
+  "core": {
+    "account_month_rows": 180000,
+    "bill_long_total": "8095850136",
+    "bill_wide_total": "8095850136",
+    "borrower_rows": 30000,
+    "duplicate_account_month_keys": 0,
+    "duplicate_borrower_keys": 0,
+    "invalid_code_rows": 0,
+    "missing_required_history_rows": 0,
+    "months_per_borrower": 6,
+    "null_borrower_keys": 0,
+    "orphan_account_month_rows": 0,
+    "payment_long_total": "949541777",
+    "payment_wide_total": "949541777"
+  },
+  "run_id": "W1-20260727-001",
+  "schema_version": "1.0",
+  "signals": {
+    "definition_version": "0.1.0",
+    "definitions": [
+      {
+        "economic_rationale": "Recent severe repayment delay indicates short-horizon repayment distress.",
+        "leakage_status": "pass",
+        "observation_timing": "Maximum non-negative repayment status from July-September 2005.",
+        "signal_id": "recent_max_delinquency",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "Persistent positive delinquency codes indicate recurring repayment difficulty.",
+        "leakage_status": "pass",
+        "observation_timing": "Count of positive repayment statuses from April-September 2005.",
+        "signal_id": "delinquent_months_6m",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "Recent severity above earlier severity indicates worsening repayment behavior.",
+        "leakage_status": "pass",
+        "observation_timing": "Recent three-month maximum minus earlier three-month maximum at 2005-09-30.",
+        "signal_id": "delinquency_deterioration",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "A latest bill near or above the credit limit indicates limited liquidity buffer.",
+        "leakage_status": "pass",
+        "observation_timing": "September 2005 bill divided by the approved credit limit.",
+        "signal_id": "latest_utilization_ratio",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "Low payment relative to the prior positive bill indicates weak near-term repayment capacity.",
+        "leakage_status": "pass",
+        "observation_timing": "September 2005 payment divided by August 2005 bill when the bill is positive.",
+        "signal_id": "payment_coverage_ratio",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "Consecutive zero-payment months may indicate sustained payment stress.",
+        "leakage_status": "pass",
+        "observation_timing": "Longest consecutive zero-payment streak from April-September 2005.",
+        "signal_id": "zero_payment_streak",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      },
+      {
+        "economic_rationale": "A rising bill may indicate increasing balance pressure, subject to empirical contradiction review.",
+        "leakage_status": "pass",
+        "observation_timing": "September versus June 2005 bill change divided by the absolute June bill.",
+        "signal_id": "recent_bill_growth",
+        "sql_artifact": "sql/features/060_risk_signals.sql",
+        "timing_status": "pass"
+      }
+    ],
+    "outcomes": [
+      {
+        "bucket": "<=0",
+        "default_count": 4464,
+        "sample_count": 24569,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "1",
+        "default_count": 669,
+        "sample_count": 2080,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 1503,
+        "sample_count": 3351,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2334,
+        "sample_count": 19931,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "1",
+        "default_count": 1320,
+        "sample_count": 4426,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 2982,
+        "sample_count": 5643,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "<0.80",
+        "default_count": 4503,
+        "sample_count": 22020,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": "0.80-<1.00",
+        "default_count": 1495,
+        "sample_count": 5857,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": ">=1.00",
+        "default_count": 638,
+        "sample_count": 2123,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": "not_applicable",
+        "default_count": 744,
+        "sample_count": 3175,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "<0.10",
+        "default_count": 3873,
+        "sample_count": 14912,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "0.10-<0.50",
+        "default_count": 953,
+        "sample_count": 4332,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": ">=0.50",
+        "default_count": 1066,
+        "sample_count": 7581,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "not_applicable",
+        "default_count": 781,
+        "sample_count": 3195,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "<=0",
+        "default_count": 3447,
+        "sample_count": 13347,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "0-<0.25",
+        "default_count": 993,
+        "sample_count": 4671,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": ">=0.25",
+        "default_count": 1415,
+        "sample_count": 8787,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2700,
+        "sample_count": 21560,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "1",
+        "default_count": 454,
+        "sample_count": 1779,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 3482,
+        "sample_count": 6661,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2151,
+        "sample_count": 15458,
+        "signal_id": "zero_payment_streak"
+      },
+      {
+        "bucket": "1",
+        "default_count": 2752,
+        "sample_count": 8247,
+        "signal_id": "zero_payment_streak"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 1733,
+        "sample_count": 6295,
+        "signal_id": "zero_payment_streak"
+      }
+    ],
+    "query_manifest": "sql/features/MANIFEST.md",
+    "risk_bands": [
+      {
+        "default_count": 1748,
+        "risk_band": "Low",
+        "sample_count": 14952
+      },
+      {
+        "default_count": 1339,
+        "risk_band": "Medium",
+        "sample_count": 8138
+      },
+      {
+        "default_count": 3549,
+        "risk_band": "High",
+        "sample_count": 6910
+      }
+    ]
+  },
+  "source": {
+    "raw_rows": 30000,
+    "registered": true,
+    "registry_path": "docs/data/source_registry.md",
+    "sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933",
+    "source_columns": 25,
+    "source_id": "uci_default_credit_card_clients",
+    "source_rows": 30000,
+    "unlogged_rejects": 0
+  },
+  "sql_tests": [
+    {
+      "affected_object": "raw.credit_card_client",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-001",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "audit.source_file -> raw.credit_card_client",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-002",
+      "tested_rows": 1
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-003",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.borrower -> core.account_month",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-004",
+      "tested_rows": 1
+    },
+    {
+      "affected_object": "audit.reconciliation_result.REC-003",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-005",
+      "tested_rows": 1
+    },
+    {
+      "affected_object": "audit.reconciliation_result.REC-004",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-006",
+      "tested_rows": 1
+    },
+    {
+      "affected_object": "core.borrower.next_month_default",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-007",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.borrower.credit_limit_ntd",
+      "failed_rows": 0,
+      "severity": "high",
+      "status": "pass",
+      "test_id": "DQ-008",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.borrower.age_years",
+      "failed_rows": 0,
+      "severity": "high",
+      "status": "pass",
+      "test_id": "DQ-009",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-010",
+      "tested_rows": 180000
+    },
+    {
+      "affected_object": "core.account_month -> core.borrower",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-011",
+      "tested_rows": 180000
+    },
+    {
+      "affected_object": "core.account_month.statement_month_end",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-012",
+      "tested_rows": 180000
+    },
+    {
+      "affected_object": "core.borrower.sex_code",
+      "failed_rows": 0,
+      "severity": "high",
+      "status": "pass",
+      "test_id": "DQ-013",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "raw.credit_card_client -> core.borrower",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-014",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "raw.credit_card_client -> core.borrower.next_month_default",
+      "failed_rows": 0,
+      "severity": "critical",
+      "status": "pass",
+      "test_id": "DQ-015",
+      "tested_rows": 30000
+    }
+  ],
+  "sql_warnings": [
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 9069,
+      "severity": "analytical_flag",
+      "status": "warn",
+      "test_id": "BR-001",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 5643,
+      "severity": "analytical_flag",
+      "status": "warn",
+      "test_id": "BR-002",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 5431,
+      "severity": "analytical_flag",
+      "status": "warn",
+      "test_id": "BR-003",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 2123,
+      "severity": "analytical_flag",
+      "status": "warn",
+      "test_id": "BR-004",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month",
+      "failed_rows": 15473,
+      "severity": "analytical_flag",
+      "status": "warn",
+      "test_id": "BR-005",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.borrower.education_code",
+      "failed_rows": 345,
+      "severity": "medium",
+      "status": "warn",
+      "test_id": "DQ-016",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.borrower.marriage_code",
+      "failed_rows": 54,
+      "severity": "medium",
+      "status": "warn",
+      "test_id": "DQ-017",
+      "tested_rows": 30000
+    },
+    {
+      "affected_object": "core.account_month.repayment_status",
+      "failed_rows": 120334,
+      "severity": "medium",
+      "status": "warn",
+      "test_id": "DQ-018",
+      "tested_rows": 180000
+    }
+  ]
+}
