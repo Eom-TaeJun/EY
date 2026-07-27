@@ -1,0 +1,280 @@
+{
+  "artifacts": [
+    {
+      "artifact_type": "excel",
+      "bytes": 22311,
+      "cross_artifact_status": "pass",
+      "path": "outputs/final/wave1_office_pack__W1-20260727-001.xlsx",
+      "reopened": true,
+      "sha256": "6f10889186d1e01cfea916bc60c9d878aad1417bada2799d487db701d2d151a3"
+    },
+    {
+      "artifact_type": "powerpoint",
+      "bytes": 52779,
+      "cross_artifact_status": "pass",
+      "path": "outputs/final/wave1_office_pack__W1-20260727-001.pptx",
+      "reopened": true,
+      "sha256": "b341e0b2b816c21a4455dcb7fad44590fed1dd6bc1c8c5d4e2c2249a922a14ff"
+    },
+    {
+      "artifact_type": "word",
+      "bytes": 42610,
+      "cross_artifact_status": "pass",
+      "path": "outputs/final/wave1_office_pack__W1-20260727-001.docx",
+      "reopened": true,
+      "sha256": "29856b3a2f1bf6c8da03c5d026c8fc016260e27804d725c4d2b0321826ff306e"
+    }
+  ],
+  "claims": [
+    "W1-CLM-001",
+    "W1-CLM-002",
+    "W1-CLM-003",
+    "W1-CLM-004",
+    "W1-CLM-005",
+    "W1-CLM-006"
+  ],
+  "cross_artifact_values": {
+    "account_month_rows": 180000,
+    "bill_difference": "0",
+    "borrower_rows": 30000,
+    "months_per_borrower": 6,
+    "payment_difference": "0",
+    "raw_rows": 30000,
+    "risk_band_count": 3,
+    "risk_band_rows": [
+      {
+        "default_count": 1748,
+        "observed_default_rate": "0.1169074371321562332798287854",
+        "risk_band": "Low",
+        "sample_count": 14952,
+        "signal_id": null
+      },
+      {
+        "default_count": 1339,
+        "observed_default_rate": "0.1645367412140575079872204473",
+        "risk_band": "Medium",
+        "sample_count": 8138,
+        "signal_id": null
+      },
+      {
+        "default_count": 3549,
+        "observed_default_rate": "0.5136034732272069464544138929",
+        "risk_band": "High",
+        "sample_count": 6910,
+        "signal_id": null
+      }
+    ],
+    "signal_bucket_count": 23,
+    "signal_count": 7,
+    "signal_rows": [
+      {
+        "bucket": "<=0",
+        "default_count": 4464,
+        "observed_default_rate": "0.1816923765721030566974642843",
+        "sample_count": 24569,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "1",
+        "default_count": 669,
+        "observed_default_rate": "0.3216346153846153846153846154",
+        "sample_count": 2080,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 1503,
+        "observed_default_rate": "0.4485228290062667860340196956",
+        "sample_count": 3351,
+        "signal_id": "delinquency_deterioration"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2334,
+        "observed_default_rate": "0.1171040088304651046109076313",
+        "sample_count": 19931,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "1",
+        "default_count": 1320,
+        "observed_default_rate": "0.2982376863985539990962494352",
+        "sample_count": 4426,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 2982,
+        "observed_default_rate": "0.5284423179160021265284423179",
+        "sample_count": 5643,
+        "signal_id": "delinquent_months_6m"
+      },
+      {
+        "bucket": "<0.80",
+        "default_count": 4503,
+        "observed_default_rate": "0.2044959128065395095367847411",
+        "sample_count": 22020,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": "0.80-<1.00",
+        "default_count": 1495,
+        "observed_default_rate": "0.2552501280519037049684138638",
+        "sample_count": 5857,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": ">=1.00",
+        "default_count": 638,
+        "observed_default_rate": "0.3005181347150259067357512953",
+        "sample_count": 2123,
+        "signal_id": "latest_utilization_ratio"
+      },
+      {
+        "bucket": "not_applicable",
+        "default_count": 744,
+        "observed_default_rate": "0.2343307086614173228346456693",
+        "sample_count": 3175,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "<0.10",
+        "default_count": 3873,
+        "observed_default_rate": "0.2597237124463519313304721030",
+        "sample_count": 14912,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "0.10-<0.50",
+        "default_count": 953,
+        "observed_default_rate": "0.2199907663896583564173591874",
+        "sample_count": 4332,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": ">=0.50",
+        "default_count": 1066,
+        "observed_default_rate": "0.1406146946313151299300883788",
+        "sample_count": 7581,
+        "signal_id": "payment_coverage_ratio"
+      },
+      {
+        "bucket": "not_applicable",
+        "default_count": 781,
+        "observed_default_rate": "0.2444444444444444444444444444",
+        "sample_count": 3195,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "<=0",
+        "default_count": 3447,
+        "observed_default_rate": "0.2582602832097100472016183412",
+        "sample_count": 13347,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "0-<0.25",
+        "default_count": 993,
+        "observed_default_rate": "0.2125883108542068079640333976",
+        "sample_count": 4671,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": ">=0.25",
+        "default_count": 1415,
+        "observed_default_rate": "0.1610333447137817229998861955",
+        "sample_count": 8787,
+        "signal_id": "recent_bill_growth"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2700,
+        "observed_default_rate": "0.1252319109461966604823747681",
+        "sample_count": 21560,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "1",
+        "default_count": 454,
+        "observed_default_rate": "0.2551995503091624508150646431",
+        "sample_count": 1779,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 3482,
+        "observed_default_rate": "0.5227443326827803633088124906",
+        "sample_count": 6661,
+        "signal_id": "recent_max_delinquency"
+      },
+      {
+        "bucket": "0",
+        "default_count": 2151,
+        "observed_default_rate": "0.1391512485444430068572907233",
+        "sample_count": 15458,
+        "signal_id": "zero_payment_streak"
+      },
+      {
+        "bucket": "1",
+        "default_count": 2752,
+        "observed_default_rate": "0.3336971019764762944100885170",
+        "sample_count": 8247,
+        "signal_id": "zero_payment_streak"
+      },
+      {
+        "bucket": "2+",
+        "default_count": 1733,
+        "observed_default_rate": "0.2752978554408260524225575854",
+        "sample_count": 6295,
+        "signal_id": "zero_payment_streak"
+      }
+    ],
+    "source_rows": 30000,
+    "sql_failed_count": 0,
+    "sql_test_count": 15
+  },
+  "generator": "src/reporting/build_wave1_office_pack.py",
+  "inputs": [
+    {
+      "input_type": "independent_validation",
+      "path": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "input_type": "claim_manifest",
+      "path": "outputs/final/wave1_claim_manifest__W1-20260727-001.json",
+      "sha256": "7a8f82d7b106c9f83719e7a297297a3d070ceb415b0cf061a9d3c80030a46b8d"
+    }
+  ],
+  "limitations": [
+    "Public-data descriptive prototype; not a production IFRS 9 rating, Stage, PD, LGD, EAD, or ECL result.",
+    "Observed default rates are descriptive associations, not causal effects.",
+    "Risk bands are explainable prototype rules, not approved bank ratings or IFRS 9 Stage assignments.",
+    "The independent validation artifact contains the aggregate SQL test count, not all individual test-result records.",
+    "Displayed percentages are rounded to two decimals; exact counts and exact decimal-rate strings remain the audit authority.",
+    "Gate 1–3 machine evidence does not constitute Gate 5 review or human approval for external publication."
+  ],
+  "pack_type": "wave1_internal_office_pack",
+  "publication": {
+    "human_approval_required": true,
+    "label": "INTERNAL ONLY — PENDING GATE 5 AND HUMAN PUBLICATION APPROVAL",
+    "required_gate": 5,
+    "status": "pending"
+  },
+  "run_id": "W1-20260727-001",
+  "schema_version": "1.0",
+  "signal_definition_version": "0.1.0",
+  "source": {
+    "sha256": "30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933",
+    "source_id": "uci_default_credit_card_clients"
+  },
+  "validation_generated_at": "2026-07-27T12:24:26.408112+00:00",
+  "verification": {
+    "binary_packages_timestamp_normalized": true,
+    "cross_artifact_values_reconciled": true,
+    "docx_reopened_with": "python-docx",
+    "pptx_reopened_with": "python-pptx",
+    "status": "pass",
+    "xlsx_reopened_with": "openpyxl"
+  }
+}

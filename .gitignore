@@ -32,6 +32,9 @@ __pycache__/
 /outputs/final/*
 !/outputs/final/*.json
 !/outputs/final/*.md
+!/outputs/final/*.xlsx
+!/outputs/final/*.pptx
+!/outputs/final/*.docx
 /logs/*
 !/logs/ingestion/
 /logs/ingestion/*
