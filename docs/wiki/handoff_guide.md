@@ -2,57 +2,54 @@
 
 ## Handoff outcome
 
-A new analyst should be able to reproduce the latest eligible internal result,
-identify why a failed Gate blocks downstream artifacts, and distinguish
-validated evidence from publication approval.
+A new analyst can reproduce the latest internal result, trace each claim to the
+source, identify what a failed Gate affects, and distinguish execution,
+validation, Gate passage, and human publication approval.
 
 ## Reading order
 
-1. [`README.md`](../../README.md) — reader-facing purpose and entry commands
-2. [`project_charter.md`](../charter/project_charter.md) — scope and non-goals
-3. [`PROJECT_STATE.md`](../../PROJECT_STATE.md) — active Wave and checkpoint
-4. [`source_registry.md`](../data/source_registry.md) — source identity and hash
-5. [`data_dictionary.md`](../data/data_dictionary.md) — fields and tables
-6. [`test_catalog.md`](../validation/test_catalog.md) — protected rules
-7. [`signal_dictionary.md`](../methodology/signal_dictionary.md) — signal versions
-8. [`decision_ledger.md`](../governance/decision_ledger.md) — approved assumptions
-9. [`work_status.md`](../governance/work_status.md) — execution history
-10. [`runbook.md`](runbook.md) — execution and recovery
-11. [`evidence_map.md`](../final/evidence_map.md) — claim activation and evidence
+1. [`README.md`](../../README.md) — 30-second portfolio summary and commands
+2. [`PROJECT_STATE.md`](../../PROJECT_STATE.md) — current checkpoint and blockers
+3. [`source_registry.md`](../data/source_registry.md) — source identity and hash
+4. [`data_dictionary.md`](../data/data_dictionary.md) — relational grains
+5. [`test_catalog.md`](../validation/test_catalog.md) — protected SQL controls
+6. [`signal_dictionary.md`](../methodology/signal_dictionary.md) — signal definitions
+7. [`wave2_validation_report.md`](../validation/wave2_validation_report.md) — model validation boundary
+8. [`lineage_spec.md`](../data/lineage_spec.md) — separate lineage/economic graph contract
+9. [`knowledge_query.md`](knowledge_query.md) — bounded evidence retrieval
+10. [`evidence_map.md`](../final/evidence_map.md) — role capability to artifact mapping
+11. [`runbook.md`](runbook.md) — execution and recovery
 
-## Canonical versus derived
+## Current retained packet
+
+| Layer | Identity and status | Evidence |
+|---|---|---|
+| Source/Wave 1 | `W1-20260727-001`, definition `0.1.0`, Gates 1–3 pass | [independent validation](../../outputs/qa/validated/latest/wave1_independent_validation.json) |
+| Office reporting | Excel/PPT/Word generated; Gate 5 mismatch 0, unresolved 0/6 | [manifest](../../outputs/final/wave1_office_manifest__W1-20260727-001.json), [Gate 5](../../outputs/qa/validated/latest/gate_5.json) |
+| Publication | internal only; human approval pending; visual render `not_run` | [Office validation](../../outputs/qa/validated/wave1_office/wave1_office_validation__W1-20260727-001.json) |
+| Wave 2 | `W2-PD-20260727-001`, definition `0.2.0`; numeric checks reproduced, Gate 4 blocked | [attempt 2](../../outputs/qa/validated/wave2_attempt_02/wave2_validation.json) |
+| Wave 3 | separate `data_lineage`/`economic_transmission`; six allowlisted questions | [lineage contract](../data/lineage_spec.md), [query contract](knowledge_query.md) |
+
+## Canonical versus rebuildable
 
 | Type | Examples | Handoff rule |
 |---|---|---|
-| Canonical source | immutable raw file and SHA-256, approved definitions, thresholds, decision records, validated run outputs | preserve history; never repair in place |
-| Rebuildable data | staging/core/mart tables | rebuild from canonical source and versioned code |
-| Rebuildable report | internal Markdown, Excel, PowerPoint, Word | regenerate from one validated run; never reconcile manually |
+| Canonical | immutable source/hash, definitions, decisions, validated run outputs | preserve history; never repair in place |
+| Rebuildable data | staging/core/mart and graph registrations | rebuild from canonical source and versioned SQL |
+| Rebuildable report | Markdown, Excel, PowerPoint, Word | regenerate from one validated run; never reconcile manually |
 | Procedural knowledge | this Wiki and runbook | may explain process but may not supply numerical truth |
-
-## Minimum handoff packet
-
-- repository commit or checkpoint identity;
-- source ID and hash;
-- database/runtime instructions without credentials;
-- latest run ID and definition version;
-- Gate 1–3 packets and independent validation result;
-- failing tests and open issues, including impact;
-- generated report and claim manifest, if eligible;
-- explicit Gate 5 and publication status;
-- exact next command.
 
 ## Acceptance questions
 
-The receiving analyst should answer all of the following from saved evidence:
+The receiver should be able to answer from saved evidence:
 
-- What source and run produced the result?
-- Which transformation creates each reported grain?
-- Which tests protect each claim?
-- Do bills, payments, rows, and outcome populations reconcile?
-- What failed in the latest unsuccessful run, and what is affected?
-- Can the internal report be regenerated without editing a number?
-- Is the result internally validated, Gate 5 reviewed, and human-approved, or
-  only one of those states?
+- Which source hash, run, definition, and SQL produced each reported value?
+- Which controls protect the borrower-month transformation and signal outcome?
+- Do rows, bills, payments, claims, and Office artifacts reconcile?
+- Why is Wave 2 a retrospective internal benchmark, and what blocks Gate 4?
+- Which graph answers provenance and which records an economic hypothesis?
+- Can the report be regenerated without editing a number?
+- Is Gate 5 passed, visually reviewed, and human-approved, or only the first?
 
-If any answer requires memory, chat history, or a spreadsheet cell with no
-producer path, the handoff is incomplete.
+If an answer depends on memory, chat history, an arbitrary SQL prompt, or an
+untraced spreadsheet cell, the handoff is incomplete.

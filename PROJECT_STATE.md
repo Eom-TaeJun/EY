@@ -2,15 +2,15 @@
 
 ## Current status
 
-- Active Wave: `Wave 1 complete — Wave 2 preflight next`
+- Active Wave: `Wave 4 supported scope complete; human publication review pending`
 - Portfolio deadline mode: `same-day critical path with parallel extensions`
 - Primary dataset for first implementation: `UCI Default of Credit Card Clients`
 - Target database: `PostgreSQL`
 - Latest validated analytical run: `W1-20260727-001`
 - Definition version: `0.1.0`
-- Current objective: preserve the independently validated Wave 1 checkpoint,
-  then execute the Wave 2 prompt without overstating the source's time, LGD,
-  EAD, Stage, or ECL coverage.
+- Latest model run: `W2-PD-20260727-001`, definition `0.2.0`
+- Current objective: preserve the completed internal evidence package and obtain
+  a human visual/publication review without changing validated numbers.
 
 ## Critical path
 
@@ -25,36 +25,48 @@
 - [x] Compare observed default rate by signal and risk band
 - [x] Independently reproduce evidence and pass Gates 1–3
 - [x] Update README and evidence map with verified internal values only
+- [x] Compare static, behavioral, and combined PD prototypes on one fixed holdout
+- [x] Independently recompute Wave 2 metrics and preserve failed validation history
+- [x] Block Gate 4 because time-direction and approved sensitivity evidence are absent
+- [x] Generate and independently reconcile Excel, PowerPoint, and Word
+- [x] Map EY FSRM hiring signals to run-bound evidence on the README first screen
+- [x] Complete the final 63-test regression and pass Gates 0–3 and 5
 
 ## Parallel tracks
 
 - [x] Data dictionary and test catalog
 - [x] Graph node/edge schema and validated Wave 1 lineage seed
+- [x] Separate 14-node/20-edge economic-transmission hypothesis graph
 - [x] Validation scaffold and fail-closed regression tests
 - [x] Internal report generator and PowerPoint page structure
-- [ ] Generated Excel/PowerPoint/Word numerical artifacts
-- [ ] Wave 2 model interfaces
+- [x] Generated and independently reconciled Excel/PowerPoint/Word artifacts
+- [x] Wave 2 model interfaces and retrospective internal benchmark
+- [x] Six-question allowlisted governed knowledge query
 
 ## Deferred
 
-- Gate 5 and external publication approval
+- Gate 4 model/scenario conclusion because the current source has no eligible
+  time direction or approved sensitivity
+- external publication approval
 - LGD and EAD estimates until an eligible performance/recovery dataset exists
 - genuine time-based validation until a borrower-level observation timestamp exists
-- RAG and LLM Wiki
-- automated reporting agents
+- semantic/vector RAG and generative LLM Wiki
+- full multi-run scheduling and recovery automation
 
 ## Latest checkpoint
 
 | Field | Value |
 |---|---|
-| checkpoint_id | CP-003 |
+| checkpoint_id | CP-006 |
 | date | 2026-07-27 |
 | owner | Orchestrator |
-| completed | Wave 1 source/raw/core/SQL QA/signals/lineage implemented; independent Gates 1–3 pass for `W1-20260727-001` |
-| verified | source/raw/borrower 30,000; customer-month 180,000; 16/16 reconciliations pass; 15 enforced DQ tests pass, 0 fail; 3 source-domain warnings |
-| open issue | `DATA-001`: undocumented UCI category/status codes preserved and isolated as warnings |
-| publication | internal evidence only; Gate 5 and human approval pending |
-| next action | Run final Wave 1 regression/checkpoint, then read and execute `prompts/03_wave2_risk_components.md` |
+| completed | Waves 0–4 implemented to supported public-data scope; recruiter-facing evidence map and handoff reconciled |
+| verified | 63 tests passed; Ruff/scaffold/governance passed; Gates 0–3 and 5 passed; Gate 4 failed closed as designed |
+| open issues | `DATA-001`, `MODEL-001`, `SCEN-001`, and `RPT-001` visual-render review |
+| Gate 4 | Blocked; this is not a time-validated, IFRS 9, or production PD result |
+| Gate 5 | Passed for Wave 1 cross-artifact consistency |
+| publication | internal evidence only; human approval pending |
+| next action | Open the Office files in Microsoft Office or LibreOffice, resolve `RPT-001`, and approve or reject external publication |
 
 ## Update rule
 

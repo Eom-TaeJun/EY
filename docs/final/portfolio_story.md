@@ -1,39 +1,56 @@
 # Portfolio Story
 
-Status: narrative scaffold. Numerical evidence remains pending independent
-Wave 1 validation, Gate 5 cross-artifact review, and human publication approval.
+Status: Waves 0–4 are implemented to the supported public-data scope. Wave 1
+passed internal Gate 5; external publication approval remains pending. Wave 2
+Gate 4 is blocked.
 
-## Problem
+## Decision-relevant result
 
-Credit-risk calculations are only useful when the project team can trust the data, reproduce the calculation, explain a change, and hand the process to another analyst.
+The project turns an unfamiliar public credit-risk workbook into a reproducible
+PostgreSQL, SQL-QA, risk-signal, validation, lineage, and reporting workflow.
+Every numerical statement is tied to one source hash, run ID, definition
+version, independent validation artifact, and claim ID.
 
-## Implemented approach
+## What was executed
 
-- defined the decision and constraints before selecting metrics
-- preserved source data through a Hermes ingestion boundary
-- specified a relational customer-month transformation with controlled ownership
-- specified SQL tests for source integrity, transformations, and business rules
-- mapped economic reasoning to observable behavioral-signal definitions
-- planned independent validation and claim-to-source lineage
-- restricted LLM use to retrieval, explanation, and documentation of approved evidence
+- The official UCI workbook was registered and loaded without changing source
+  values. Run `W1-20260727-001` reconciled 30,000 raw/borrower rows and 180,000
+  borrower-month rows, with bill and payment differences of zero.
+- Fifteen enforced DQ tests passed, none failed, and three source-domain
+  warnings were retained. Seven behavioral signals produced 23 measured
+  buckets; contradictory and non-monotonic findings were not removed.
+- Excel, PowerPoint, Word, and Markdown outputs were generated from the same
+  validation JSON and claim manifest. The [Gate 5 packet](../../outputs/qa/validated/latest/gate_5.json)
+  records zero cross-artifact mismatches and zero unresolved claims.
+- Static, behavioral, and combined PD prototypes were independently reproduced
+  on one fixed 6,000-row test sample. The result is labelled a cross-sectional
+  retrospective internal benchmark because the source has no eligible time
+  direction; [Gate 4 remains blocked](../../outputs/qa/validated/wave2_attempt_02/wave2_validation.json).
+- PostgreSQL stores [data lineage and economic hypotheses in separate graph
+  scopes](../data/lineage_spec.md): 20 lineage nodes/59 edges and 14 economic
+  nodes/20 edges passed their exact graph contracts. A [governed
+  query](../wiki/knowledge_query.md) answers six fixed traceability questions
+  from a code-and-manifest allowlist; it is not free-form SQL, semantic RAG, or
+  an LLM.
 
-The execution state of each producer is recorded in `PROJECT_STATE.md` and
-`docs/governance/work_status.md`; this narrative does not promote a planned or
-implemented component to a verified result.
+## Reviewer evidence
 
-## Evidence activation after execution
+- Source and transformation: [source registry](../data/source_registry.md),
+  [data dictionary](../data/data_dictionary.md)
+- SQL controls and results: [test catalog](../validation/test_catalog.md),
+  [Wave 1 validation](../../outputs/qa/validated/latest/wave1_independent_validation.json)
+- Risk reasoning: [signal dictionary](../methodology/signal_dictionary.md),
+  [economic hypotheses](../methodology/transmission_paths.md)
+- Generated review pack: [Excel](../../outputs/final/wave1_office_pack__W1-20260727-001.xlsx),
+  [PowerPoint](../../outputs/final/wave1_office_pack__W1-20260727-001.pptx),
+  [Word](../../outputs/final/wave1_office_pack__W1-20260727-001.docx)
+- Reproduction and handoff: [runbook](../wiki/runbook.md),
+  [evidence map](evidence_map.md)
 
-- source and customer-month reconciliation results
-- number and status of SQL tests
-- observed default-rate separation by signal and risk band
-- one issue investigation and resolution path
-- one claim-to-source lineage example
-
-These items may be added only through the claim activation and publication
-rules in [`evidence_map.md`](evidence_map.md), not by manually editing values.
-
-## Limitation
+## Limitations
 
 This is a public-data prototype, not an official bank IFRS 9 implementation.
-No production Stage, EAD, LGD, ECL, rating, causal, or model-approval claim is
-made.
+No production rating, Stage, EAD, LGD, ECL, causal, out-of-time, external
+validation, or model-approval claim is made. LibreOffice was unavailable, so
+visual-render QA is `not_run`; OOXML structural reopen and value reconciliation
+passed, and a human must still inspect layout and approve publication.

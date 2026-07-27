@@ -1,28 +1,29 @@
-# Presentation Scaffold
+# Wave 1 Presentation
 
-No numerical slide is authoritative on its own. Presentation artifacts must be
-generated from the same validated run and claim manifest as the internal
-report, then reconciled at Gate 5.
+The generated [PowerPoint deck](../outputs/final/wave1_office_pack__W1-20260727-001.pptx)
+is a seven-slide, two-chart review artifact for run `W1-20260727-001`,
+definition `0.1.0`. It is generated from the same validation JSON and claim
+manifest as the Excel, Word, and Markdown outputs.
 
 ## Current status
 
-- deck structure: implemented;
-- validated numerical slide content: pending Gate 1–3 evidence;
-- cross-artifact reconciliation: pending Gate 5;
-- external publication: pending human approval.
+- numerical content: independently validated Wave 1 evidence;
+- cross-artifact reconciliation: Gate 5 passed, mismatch `0`, unresolved claims
+  `0/6`;
+- publication: internal only; human approval pending;
+- visual QA: LibreOffice render `not_run`; OOXML structure, package reopen, and
+  governed values passed.
 
-Use [`wave1_deck_outline.md`](wave1_deck_outline.md) as the page contract.
-Do not replace placeholders by copying values from a terminal, database client,
-README, or interview notes.
+Use the [page contract](wave1_deck_outline.md), [Office manifest](../outputs/final/wave1_office_manifest__W1-20260727-001.json),
+and [Gate 5 packet](../outputs/qa/validated/latest/gate_5.json) together. The
+deck is not numerical authority on its own.
 
-## Required metadata on every numerical page
+## Review before external use
 
-- run ID;
-- validation artifact;
-- claim ID;
-- signal/definition version when applicable;
-- denominator and observation window;
-- limitation or proxy label;
-- generated timestamp.
-
-If any metadata is missing, the page is a structure-only draft.
+- Open the PPTX in an Office-compatible renderer and inspect chart labels,
+  clipping, fonts, and pagination.
+- Confirm the run ID, definition version, source hash, internal-use label, and
+  limitations remain present.
+- Do not describe risk bands as bank ratings or IFRS 9 Stage assignments.
+- Do not replace generated values, remove failed/warning context, or mark
+  publication approved without a human decision.

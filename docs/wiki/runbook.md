@@ -7,6 +7,11 @@ threshold, overwriting evidence, or publishing an unapproved result. Run every
 command from the repository root. `PROJECT_STATE.md` is the current-state
 authority; this page is the operating procedure.
 
+The retained run `W1-20260727-001` passed Gates 1–3 and Office Gate 5.
+External publication remains pending human approval. Wave 2 model metrics were
+independently reproduced, but Gate 4 is blocked and must not be promoted to a
+time-validated or IFRS 9 result.
+
 ## 1. Preflight
 
 Confirm the expected root and scaffold before a database or Git command.
@@ -155,16 +160,75 @@ for the generated-file contract.
 
 ## 7. Gate 5 and publication
 
-Gate 5 requires the database/code/report/Excel/PowerPoint/Word outputs being
-reviewed to share one run ID and reconcile. A passing command is evidence for
-review, not permission to publish.
+Check the Office inputs without writing:
+
+```bash
+python -m src.reporting.build_wave1_office_pack --check-only
+```
+
+For a new eligible run, generate the review pack from that run's validation and
+claim manifest. Use a new output directory/path; the builder does not
+overwrite.
+
+```bash
+python -m src.reporting.build_wave1_office_pack \
+  --validation <NEW_VALIDATION_JSON> \
+  --claim-manifest <NEW_CLAIM_MANIFEST> \
+  --output-dir <NEW_OUTPUT_DIR>
+```
+
+Independently reopen and reconcile the new files, again using new evidence
+paths:
+
+```bash
+python -m src.validation.wave1_office_validation \
+  --office-manifest <NEW_OFFICE_MANIFEST> \
+  --validation <NEW_VALIDATION_JSON> \
+  --claim-manifest <NEW_CLAIM_MANIFEST> \
+  --evidence-map docs/final/evidence_map.md \
+  --artifact-root . \
+  --output <NEW_OFFICE_VALIDATION_JSON> \
+  --gate-output <NEW_GATE5_PACKET>
+```
+
+Gate 5 requires Markdown/Excel/PowerPoint/Word outputs to share one run ID and
+reconcile. Recheck the retained canonical packet with:
 
 ```bash
 make gate5
 ```
 
-Only a human may approve external portfolio claims. Do not replace `pending`
-text in a generated report by hand.
+The current [Gate 5 packet](../../outputs/qa/validated/latest/gate_5.json)
+passes with zero mismatches and zero unresolved claims. Human publication
+approval is still pending. LibreOffice was unavailable, so visual-render QA is
+`not_run`; structural OOXML reopen and value QA completed. Inspect charts,
+clipping, and pagination in an Office-compatible renderer before approval.
+
+## 8. Check Wave 2 and Wave 3 boundaries
+
+Read the independent Wave 2 result; do not infer approval from passing numeric
+checks:
+
+```bash
+python -m pytest -q tests/models tests/validation
+```
+
+The retained [attempt 2](../../outputs/qa/validated/wave2_attempt_02/wave2_validation.json)
+is a cross-sectional retrospective internal benchmark. Gate 4 is blocked by
+missing genuine time direction and approved sensitivity values. No Stage,
+EAD, LGD, or ECL was estimated.
+
+Verify the bounded knowledge interface:
+
+```bash
+python -m src.knowledge.query --list-questions
+python -m src.knowledge.query --question-id metric_calculation
+python -m pytest -q tests/knowledge
+```
+
+The CLI accepts only six fixed question IDs and allowlisted evidence. PostgreSQL
+keeps `data_lineage` and `economic_transmission` in separate graph scopes; see
+the exact SQL checks in the [lineage specification](../data/lineage_spec.md).
 
 ## Recovery matrix
 
@@ -178,6 +242,8 @@ text in a generated report by hand.
 | Validation output exists | use a new output path and run ID | overwrite the existing validation JSON |
 | Report output exists | keep it as historical evidence and generate from a new validated run | edit or overwrite report numbers |
 | Cross-artifact mismatch | identify the first differing producer and regenerate downstream outputs | copy/paste numbers to make artifacts agree |
+| Visual renderer unavailable | retain structural QA, record `not_run`, inspect in an Office-compatible renderer before approval | treat OOXML reopen as visual-layout approval |
+| Wave 2 numerical checks pass but Gate 4 is blocked | retain the benchmark and blockers; obtain eligible time/scenario evidence | call an ID split time validation or infer Stage/EAD/LGD/ECL |
 
 ## Resume checklist
 

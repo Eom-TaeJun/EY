@@ -19,27 +19,43 @@ ID and JSON evidence pointers; the Orchestrator/Reviewer records Gate status.
 
 | Capability ID | Expected work or preference | Repository evidence | Current evidence state | What it signals |
 |---|---|---|---|---|
-| CAP-001 | SQL | `sql/ddl/`, `sql/staging/`, `sql/quality/`, `sql/reconciliation/`, `sql/features/` | Validated for `W1-20260727-001`; Gate 1–3 pass | Can retrieve, transform, and test project data |
-| CAP-002 | Data analysis and testing | test catalog, reconciliation plan, `audit` results, independent validation | Validated: 30,000 borrowers, 180,000 customer-months, exact count/amount tie-outs | Can execute controlled analytical tasks |
-| CAP-003 | Excel | generated test/reconciliation workbook from one validated run | Deferred to Wave 4; no claim | Can package exact review values without copy/paste |
-| CAP-004 | PowerPoint | `presentation/` scaffold and later run-bound deck | Scaffold implemented; numerical slides pending Gate 5 | Can convert evidence into review-ready messages |
-| CAP-005 | Word/reporting | internal report generator, claim manifest, methodology report | Validated internal report generated; publication pending Gate 5/human approval | Can create controlled, traceable documentation |
-| CAP-006 | Economics | transmission paths linked to measurable behavioral signals | Seven signals measured; contradictory/non-monotonic results retained | Understands why a signal may indicate changing risk |
-| CAP-007 | Statistics | observed rates with explicit denominators; later calibration and stability | Descriptive rates validated; causal/model claims deferred | Distinguishes descriptive evidence from model/causal claims |
-| CAP-008 | Process improvement | Harness, gates, runbook, recovery matrix, no-overwrite outputs | Implemented; operational evidence accumulates per run | Improves repeatability, control, and recovery |
-| CAP-009 | Project management | task graph, owners, state, issues, decisions, handoff packet | Implemented | Can coordinate dependencies and leave traceable progress |
-| CAP-010 | Data/risk/AI control | immutable sources, definition boundaries, independent validation, restricted RAG policy | Governance implemented; run evidence pending | Does not allow LLM text or manual edits to become numerical authority |
+| CAP-001 | SQL | [`sql/`](../../sql/) DDL, staging, reconciliation, QA, signals | `W1-20260727-001`; Gates 1–3 pass | Can retrieve, transform, and test project data |
+| CAP-002 | Data analysis and testing | [`test catalog`](../validation/test_catalog.md), `audit` evidence, [independent validation](../../outputs/qa/validated/latest/wave1_independent_validation.json) | 30,000 borrowers, 180,000 borrower-months, exact count/amount tie-outs | Can execute controlled analytical tasks |
+| CAP-003 | Excel | [run-bound workbook](../../outputs/final/wave1_office_pack__W1-20260727-001.xlsx) | Generated, structurally reopened, values reconciled; Gate 5 pass | Can package review values without copy/paste |
+| CAP-004 | PowerPoint | [seven-slide deck](../../outputs/final/wave1_office_pack__W1-20260727-001.pptx) and [page contract](../../presentation/wave1_deck_outline.md) | Generated with two charts; Gate 5 pass | Can convert evidence into review-ready messages |
+| CAP-005 | Word/reporting | [Word report](../../outputs/final/wave1_office_pack__W1-20260727-001.docx), [Markdown report](../../outputs/final/wave1_internal_report__W1-20260727-001.md), claim manifest | Gate 5 pass; human publication approval pending | Can create controlled, traceable documentation |
+| CAP-006 | Economics | [transmission paths](../methodology/transmission_paths.md) and separate economic graph | Seven signals measured; supported, mixed, and contradicted directions retained | Understands why a signal may indicate changing risk |
+| CAP-007 | Statistics | observed rates plus [Wave 2 independent validation](../../outputs/qa/validated/wave2_attempt_02/wave2_validation.json) | Static/behavioral/combined metrics reproduced; Gate 4 blocked | Distinguishes an internal benchmark from time/external validation |
+| CAP-008 | Process improvement | Harness, gates, [runbook](../wiki/runbook.md), recovery matrix, no-overwrite outputs | Implemented and exercised through Gate 5 | Improves repeatability, control, and recovery |
+| CAP-009 | Project management | task graph, owners, state, issues, decisions, [handoff packet](../wiki/handoff_guide.md) | Implemented | Can coordinate dependencies and leave traceable progress |
+| CAP-010 | Data/risk/AI control | immutable sources, independent validation, [separate graph scopes](../data/lineage_spec.md), [bounded knowledge query](../wiki/knowledge_query.md) | Lineage 20 nodes/59 edges; economic hypotheses 14/20; six governed queries; free-form SQL/LLM excluded | Does not allow generated text or manual edits to become numerical authority |
 
 ## Wave 1 claim activation
 
 | Claim ID | Reader-facing claim | Activation condition | Deterministic producer | Required evidence | Report consumers | Current status |
 |---|---|---|---|---|---|---|
-| W1-CLM-001 | Registered source and raw rows reconcile exactly | Gate 1 packet passes for the report run | Hermes ingestion + independent validation | Gate 1 `raw_rows_reconciled`; source registry; source SHA-256 | internal report; later workbook/deck | Validated internal — `W1-20260727-001` |
-| W1-CLM-002 | Borrower and six-month borrower-month rows reconcile | Gates 1–2 pass for the same run | core transformation + independent validation | Gate 2 `wide_to_long_rows` | internal report; later workbook/deck | Validated internal — `W1-20260727-001` |
-| W1-CLM-003 | Wide and long bill/payment totals reconcile | Gates 1–2 pass within the approved threshold | reconciliation SQL + independent validation | Gate 2 `bill_amounts`, `payment_amounts` | internal report; later workbook/deck | Validated internal — `W1-20260727-001` |
-| W1-CLM-004 | Required SQL tests executed with no failure | Gate 2 passes and test count/failed count reconcile | SQL QA + independent validation | Gate 2 `sql_test_suite`; test catalog/results | internal report; later workbook/deck | Validated internal — 15 enforced pass, 0 fail; 3 separate warnings |
-| W1-CLM-005 | Signal buckets have measured samples and observed default rates | Gates 1–3 pass; timing/leakage/SQL coverage pass | signal SQL + independent validation | Gate 3 outcome summary; `verified_findings.signal_outcomes` | internal report; later workbook/deck | Validated internal — seven signals |
-| W1-CLM-006 | Initial risk bands have measured samples and observed default rates | Gates 1–3 pass for the same definition version | risk-band SQL + independent validation | Gate 3 outcome summary; `verified_findings.risk_band_outcomes` | internal report; later workbook/deck | Validated internal — definition 0.1.0 |
+| W1-CLM-001 | Registered source and raw rows reconcile exactly | Gate 1 packet passes for the report run | Hermes ingestion + independent validation | Gate 1 `raw_rows_reconciled`; source registry; source SHA-256 | Markdown, Excel, PPT, Word | Gate 5 passed — `W1-20260727-001`; human approval pending |
+| W1-CLM-002 | Borrower and six-month borrower-month rows reconcile | Gates 1–2 pass for the same run | core transformation + independent validation | Gate 2 `wide_to_long_rows` | Markdown, Excel, PPT, Word | Gate 5 passed — `W1-20260727-001`; human approval pending |
+| W1-CLM-003 | Wide and long bill/payment totals reconcile | Gates 1–2 pass within the approved threshold | reconciliation SQL + independent validation | Gate 2 `bill_amounts`, `payment_amounts` | Markdown, Excel, PPT, Word | Gate 5 passed — `W1-20260727-001`; human approval pending |
+| W1-CLM-004 | Required SQL tests executed with no failure | Gate 2 passes and test count/failed count reconcile | SQL QA + independent validation | Gate 2 `sql_test_suite`; test catalog/results | Markdown, Excel, PPT, Word | Gate 5 passed — 15 enforced pass, 0 fail; 3 warnings |
+| W1-CLM-005 | Signal buckets have measured samples and observed default rates | Gates 1–3 pass; timing/leakage/SQL coverage pass | signal SQL + independent validation | Gate 3 outcome summary; `verified_findings.signal_outcomes` | Markdown, Excel, PPT, Word | Gate 5 passed — seven signals; human approval pending |
+| W1-CLM-006 | Initial risk bands have measured samples and observed default rates | Gates 1–3 pass for the same definition version | risk-band SQL + independent validation | Gate 3 outcome summary; `verified_findings.risk_band_outcomes` | Markdown, Excel, PPT, Word | Gate 5 passed — definition `0.1.0`; human approval pending |
+
+The passing [`Gate 5 packet`](../../outputs/qa/validated/latest/gate_5.json)
+records one shared run ID across three Office artifacts, zero value mismatches,
+zero unresolved claims out of six, and six documented limitations.
+
+## Wave 2 evidence boundary
+
+[`W2-PD-20260727-001`](../../outputs/qa/validated/wave2_attempt_02/wave2_validation.json)
+uses one 6,000-row test sample with 1,332 defaults. Independent reproduction
+returned static/behavioral/combined ROC AUC of
+`0.634600`/`0.740660`/`0.754496`, PR AUC of
+`0.320896`/`0.488144`/`0.494651`, and Brier scores of
+`0.166000`/`0.144819`/`0.143825`. These are cross-sectional retrospective
+internal benchmarks only. Gate 4 is blocked because genuine time direction
+and approved sensitivity values are unavailable; no Stage, EAD, LGD, or ECL
+estimate exists.
 
 ## Claim-to-source path
 
@@ -57,12 +73,11 @@ as zero, pass, or not applicable.
 - [x] Claim manifest and report were generated from one validation artifact.
 - [x] Validation artifact has `status=pass` and empty issues.
 - [x] Gate 1–3 packets and independent contract reports use the same run ID.
-- [ ] Excel/PowerPoint/Word, if present, use the same run ID and generated values.
-- [ ] `make gate5` passes with cross-artifact evidence.
-- [ ] Limitations and proxy labels reconcile across artifacts.
+- [x] Excel/PowerPoint/Word use the same run ID and generated values.
+- [x] `make gate5` passes with cross-artifact evidence.
+- [x] Limitations and proxy labels reconcile across artifacts.
 - [ ] Reviewer recommends release.
 - [ ] Human approves external publication.
 
-Until all applicable boxes are checked, independently validated internal
-findings may be recorded with run ID, but must not be quoted as externally
-approved portfolio claims.
+Gate 5 has passed, but the unchecked human approval keeps every claim internal.
+LibreOffice visual-render QA is also `not_run`; structural OOXML QA passed.

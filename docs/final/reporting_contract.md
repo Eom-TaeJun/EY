@@ -2,105 +2,93 @@
 
 ## Decision supported
 
-Allow a reviewer to read Wave 1 evidence without creating a second numerical
-authority. The report is a rebuildable view; the independent validation JSON
-and its referenced source/code artifacts remain the evidence.
+Wave 1 reader artifacts are rebuildable views, not new numerical authorities.
+The [independent validation JSON](../../outputs/qa/validated/latest/wave1_independent_validation.json)
+and its source/code references remain authoritative.
 
-## Input
+## Input and fail-closed controls
 
-`src.reporting.build_wave1_report` accepts exactly one independent Wave 1
-validation JSON. It requires:
+The Markdown and Office builders require one passing Wave 1 validation artifact
+and the run-bound claim manifest. They reject missing, failed, malformed,
+mixed-run, non-finite, duplicate, or arithmetically inconsistent evidence and
+recompute:
 
-- schema version `1.0`;
-- non-blank run ID and validation timestamp;
-- overall `status=pass` and an empty issue list;
-- exactly one Gate 1, Gate 2, and Gate 3 packet for the same run;
-- valid independent contract reports for Gates 1–3;
-- complete `verified_findings`;
-- referenced repository artifacts when the CLI runs from this repository.
+- source/raw/borrower and borrower-month row reconciliation;
+- wide-to-long bill and payment reconciliation;
+- SQL test counts and failures;
+- signal and risk-band populations, defaults, and observed rates;
+- run ID, definition version, claim IDs, validation hash, and limitations.
 
-Missing, failed, malformed, mixed-run, non-finite, duplicate, or arithmetically
-inconsistent evidence blocks generation.
+Outputs are created with exclusive-write semantics. Corrected evidence requires
+a new run/output path; a reviewer must not edit a displayed number to repair a
+mismatch.
 
-## Recomputed controls
+## Generated artifacts
 
-The reporting boundary does not merely trust the displayed values. It checks:
+For `W1-20260727-001`, the controlled outputs are:
 
-- source rows equal raw rows;
-- raw rows equal borrower rows;
-- borrower-month rows equal borrowers multiplied by six;
-- wide and long bill/payment differences are arithmetically consistent and
-  pass the configured Gate threshold;
-- SQL test count matches Gate 2 and failed count is zero;
-- signal and risk-band outcome counts match Gate 3;
-- each outcome population ties to borrower rows;
-- each observed default rate equals defaults divided by sample.
+- [Markdown report](../../outputs/final/wave1_internal_report__W1-20260727-001.md)
+  and [claim manifest](../../outputs/final/wave1_claim_manifest__W1-20260727-001.json);
+- [Excel workbook](../../outputs/final/wave1_office_pack__W1-20260727-001.xlsx);
+- [PowerPoint deck](../../outputs/final/wave1_office_pack__W1-20260727-001.pptx);
+- [Word report](../../outputs/final/wave1_office_pack__W1-20260727-001.docx);
+- [Office manifest](../../outputs/final/wave1_office_manifest__W1-20260727-001.json).
 
-## Outputs
-
-For run `<RUN_ID>`, the command creates new files under the selected output
-directory:
-
-- `wave1_internal_report__<RUN_ID>.md`;
-- `wave1_claim_manifest__<RUN_ID>.json`.
-
-The manifest records:
-
-- run and definition versions;
-- input validation reference and SHA-256;
-- report SHA-256;
-- claim IDs and JSON evidence pointers;
-- deterministic percentage-display rule;
-- publication status.
-
-The builder refuses to overwrite either file. A corrected upstream result
-requires a new validation output and report run.
-
-## Publication boundary
-
-Generated files are labelled internal drafts. The command cannot:
-
-- pass or approve Gate 5;
-- approve a model, definition, rating, Stage, or risk interpretation;
-- publish a portfolio claim;
-- remove a limitation;
-- reconcile another artifact by editing a number.
-
-Gate 5 and explicit human publication approval are required before external
-quotation.
+The workbook contains eight review sheets. The deck contains seven slides and
+two generated charts. Excel, PowerPoint, and Word values are recorded in the
+Office manifest and independently reopened and reconciled.
 
 ## Commands
 
-Eligibility check:
+Validate the current inputs without writing:
 
 ```bash
 python -m src.reporting.build_wave1_report \
-  --validation outputs/qa/wave1_independent_validation.json \
+  --validation outputs/qa/validated/latest/wave1_independent_validation.json \
   --check-only
+python -m src.reporting.build_wave1_office_pack --check-only
 ```
 
-Internal report generation:
+Generate a new eligible run's Markdown and Office artifacts:
 
 ```bash
 python -m src.reporting.build_wave1_report \
-  --validation outputs/qa/wave1_independent_validation.json \
-  --output-dir outputs/final
+  --validation <NEW_VALIDATION_JSON> \
+  --output-dir <NEW_OUTPUT_DIR>
+python -m src.reporting.build_wave1_office_pack \
+  --validation <NEW_VALIDATION_JSON> \
+  --claim-manifest <NEW_CLAIM_MANIFEST> \
+  --output-dir <NEW_OUTPUT_DIR>
 ```
 
-## Report shape
+Independently validate a new Office pack and emit a new Gate 5 packet:
 
-The technical report follows this reading order:
+```bash
+python -m src.validation.wave1_office_validation \
+  --office-manifest <NEW_OFFICE_MANIFEST> \
+  --validation <NEW_VALIDATION_JSON> \
+  --claim-manifest <NEW_CLAIM_MANIFEST> \
+  --evidence-map docs/final/evidence_map.md \
+  --artifact-root . \
+  --output <NEW_OFFICE_VALIDATION_JSON> \
+  --gate-output <NEW_GATE5_PACKET>
+```
 
-1. publication boundary and technical summary;
-2. scope and metric definitions;
-3. source/core/amount reconciliations;
-4. SQL-control status;
-5. signal-bucket observed outcomes;
-6. risk-band observed outcomes;
-7. method and traceability;
-8. limitations and uncertainty;
-9. next steps and further questions.
+For the retained current evidence, run:
 
-Exact audit tables are used for Wave 1. Charts are deferred because no
-publication-reviewed run output is currently available; a future visualization
-must retain the same run ID, denominators, claim IDs, and source metadata.
+```bash
+make gate5
+```
+
+## Current validation and publication boundary
+
+The [Office validation report](../../outputs/qa/validated/wave1_office/wave1_office_validation__W1-20260727-001.json)
+and [Gate 5 packet](../../outputs/qa/validated/latest/gate_5.json) both pass:
+all three Office artifacts share one run ID, `mismatch_count=0`, and
+`unresolved_claim_count=0`. Six limitations are documented.
+
+Gate 5 proves internal cross-artifact consistency; it does not approve external
+publication, a model, risk grade, Stage, EAD, LGD, ECL, or causal
+interpretation. Human publication approval remains pending. LibreOffice was
+unavailable, so visual-render QA is `not_run`; structural OOXML/package reopen
+and value QA completed.

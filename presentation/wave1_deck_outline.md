@@ -1,30 +1,30 @@
-# Wave 1 Review Deck Outline
+# Wave 1 Review Deck Contract
 
-Status: structure-only. All numerical fields are `PENDING_VALIDATED_RUN`; do
-not populate them manually.
+Status: generated and Gate 5-reconciled for `W1-20260727-001`; human external
+publication approval remains pending.
 
-| Page | Decision-relevant message | Evidence object | Claim ID | Activation |
-|---:|---|---|---|---|
-| 1 | The project is a controlled credit-risk data and SQL evidence workflow | charter, Harness, current state | non-numerical | implemented |
-| 2 | The source is identifiable and protected from silent change | source registry, Gate 1 packet | W1-CLM-001 | Gate 1 + same run |
-| 3 | The relational transformation preserves population and amounts | Gate 2 row/bill/payment checks | W1-CLM-002, W1-CLM-003 | Gates 1–2 + same run |
-| 4 | SQL controls make data and calculation failures visible | test catalog, Gate 2 suite | W1-CLM-004 | Gate 2 + same run |
-| 5 | Behavioral signals have explicit economic and timing definitions | signal dictionary, Gate 3 definition/timing/leakage checks | W1-CLM-005 | Gate 3 + same version |
-| 6 | Observed outcomes are reported with samples and denominators | validated signal and risk-band outcomes | W1-CLM-005, W1-CLM-006 | Gate 3 + same run |
-| 7 | Every claim can be traced and regenerated | claim manifest and lineage | all active claims | Gate 5 |
-| 8 | Public-data and IFRS 9 boundaries remain explicit | limitations and proxy scope | non-numerical | reviewer confirmed |
+| Slide | Decision-relevant message | Generated evidence | Claim IDs |
+|---:|---|---|---|
+| 1 | This is a controlled credit-risk data, SQL, validation, and reporting workflow | run/definition/publication metadata | scope |
+| 2 | One validated evidence packet drives every review artifact | source, population, QA, and Gate summary | W1-CLM-001–006 |
+| 3 | The relational transformation preserves rows and amounts | source/raw/borrower/month and bill/payment reconciliation | W1-CLM-001–003 |
+| 4 | SQL controls expose failures and retain source-domain warnings | DQ result table and limitation | W1-CLM-004 |
+| 5 | Initial risk bands separate observed outcomes but are not ratings or Stage | three-band generated chart/table | W1-CLM-006 |
+| 6 | Six-month delinquency frequency has explicit samples and denominators | generated bucket chart/table | W1-CLM-005 |
+| 7 | Claims remain traceable and publication-controlled | claim manifest, validation hash, limitations, approval boundary | W1-CLM-001–006 |
 
-## Page contract
+## Evidence
 
-Each activated page begins with one claim and shows its evidence next to the
-interpretation. Quantitative pages use generated tables/charts plus an adjacent
-plain-language explanation. Footer metadata must show run ID, claim ID,
-definition version, and publication status.
+- [Generated PPTX](../outputs/final/wave1_office_pack__W1-20260727-001.pptx)
+- [Office manifest](../outputs/final/wave1_office_manifest__W1-20260727-001.json)
+- [Office validation](../outputs/qa/validated/wave1_office/wave1_office_validation__W1-20260727-001.json)
+- [Gate 5 packet](../outputs/qa/validated/latest/gate_5.json)
 
 ## Prohibited edits
 
 - typing or pasting a numerical result into the deck;
-- mixing results from different run IDs;
-- removing a failed test or limitation;
-- describing a risk band as a bank rating or Stage;
-- changing `pending` to `approved` without Gate 5 evidence and human approval.
+- mixing run IDs or definition versions;
+- removing a warning, failed test, or limitation;
+- describing the bands as a bank rating, Stage, or approved model;
+- treating structural OOXML QA as visual-render approval;
+- changing publication status without human approval.

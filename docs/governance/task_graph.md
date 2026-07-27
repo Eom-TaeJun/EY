@@ -46,10 +46,11 @@ cross-owned changes are returned to the path owner instead of edited in place.
 | Data Model | `sql/ddl/` except `030_meta_graph.sql` and `031_wave1_lineage.sql`, `sql/staging/`, `docs/data/{logical_data_model,data_dictionary}.md` | Hermes reconciliation |
 | SQL QA | `sql/quality/`, `sql/business_rules/`, `sql/reconciliation/`, `tests/data_quality/`, `docs/validation/{test_catalog,reconciliation_plan}.md` | Data Model definitions |
 | Risk Signal | `sql/features/`, `src/features/`, `docs/methodology/{signal_dictionary,transmission_paths}.md` | Gate 2 evidence |
-| Risk Component | `sql/risk_components/`, `src/models/`, `config/scenarios.yml`, `docs/methodology/risk_component_scope.md` | Gate 3 evidence |
-| Graph | `sql/ddl/030_meta_graph.sql`, `sql/ddl/031_wave1_lineage.sql`, graph sections of `docs/data/lineage_spec.md`, `tests/graph/` | approved types; validated runs for result links |
-| Validation | `src/validation/`, `tests/integration/`, `tests/regression/`, `docs/validation/model_validation_plan.md`, `outputs/qa/` | builder output; does not edit builder paths |
-| Documentation | `README.md`, `docs/wiki/`, `docs/final/`, `presentation/`, report-generation code under `src/reporting/` | validated run outputs only |
+| Risk Component | `sql/risk_components/`, `src/models/`, `tests/models/`, `config/scenarios.yml`, `docs/methodology/risk_component_scope.md` | Gate 3 evidence |
+| Graph | `sql/ddl/030_meta_graph.sql`, `sql/ddl/031_wave1_lineage.sql`, `sql/ddl/032_wave1_economic_hypotheses.sql`, graph sections of `docs/data/lineage_spec.md`, `tests/graph/` | approved types; validated runs for result links |
+| Validation | `src/validation/`, `tests/integration/`, `tests/regression/`, `tests/validation/`, `docs/validation/model_validation_plan.md`, `docs/validation/wave2_validation_report.md`, `outputs/qa/` | builder output; does not edit builder paths |
+| Documentation | `README.md`, `docs/assets/`, `docs/wiki/`, `docs/final/`, `presentation/`, `src/reporting/`, `tests/reporting/`, run-bound Office outputs | validated run outputs only |
+| Documentation / Knowledge | `src/knowledge/`, `tests/knowledge/`, `config/knowledge_sources.yml`, `docs/wiki/knowledge_query.md` | approved definitions and validated/blocked evidence only |
 | Reviewer | no builder path; issue reports only | all evidence, read-only |
 
 Shared `audit` tables are defined by Data Model and synchronized with
