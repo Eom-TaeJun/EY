@@ -11,7 +11,8 @@ Input tables and evidence:
   outputs/qa/validated/latest/wave1_independent_validation.json.
 Output definition and grain:
   Versioned `data_lineage` nodes at source file, run, code/object, feature,
-  validation-result, and artifact grain, plus deterministic same-scope edges.
+  validation-result, and artifact grain, plus two deterministic same-scope edge
+  families: retained producer-flow edges and claim-to-source dependency edges.
 Observation point:
   The registered analytical definitions observe 2005-09-30. Edge validity
   begins 2026-07-27, the date of independent validation for the supplied run.
@@ -524,6 +525,30 @@ BEGIN
             NULL,
             'validated'
         );
+        PERFORM meta.register_edge(
+            c_scope,
+            v_summary_query_node_id,
+            v_feature_node_id,
+            'computed_from',
+            c_valid_from,
+            NULL,
+            NULL,
+            'sql/reporting/070_signal_summaries.sql',
+            NULL,
+            'validated'
+        );
+        PERFORM meta.register_edge(
+            c_scope,
+            v_feature_node_id,
+            v_signal_query_node_id,
+            'computed_from',
+            c_valid_from,
+            NULL,
+            NULL,
+            'sql/features/060_risk_signals.sql',
+            NULL,
+            'validated'
+        );
 
         v_feature_count := v_feature_count + 1;
     END LOOP;
@@ -573,6 +598,134 @@ BEGIN
         NULL,
         NULL,
         c_validation_evidence,
+        NULL,
+        'validated'
+    );
+
+    /*
+    Claim-to-source dependency family:
+      These edges deliberately point from each downstream object to its
+      immediate dependency. They are additive to the historical producer-flow
+      edges above and make Artifact -> ... -> Source a bounded forward walk
+      over only `computed_from` and `validated_by`.
+    */
+    PERFORM meta.register_edge(
+        c_scope,
+        v_artifact_node_id,
+        v_result_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        c_validation_evidence,
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_result_node_id,
+        v_validation_test_node_id,
+        'validated_by',
+        c_valid_from,
+        NULL,
+        NULL,
+        c_validation_evidence,
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_validation_test_node_id,
+        v_summary_query_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        c_validation_evidence,
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_signal_query_node_id,
+        v_borrower_table_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'sql/features/060_risk_signals.sql',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_signal_query_node_id,
+        v_account_month_table_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'sql/features/060_risk_signals.sql',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_borrower_table_node_id,
+        v_core_transform_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'sql/staging/020_build_core.sql',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_account_month_table_node_id,
+        v_core_transform_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'sql/staging/020_build_core.sql',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_core_transform_node_id,
+        v_raw_table_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'sql/staging/020_build_core.sql',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_raw_table_node_id,
+        v_loader_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'src/ingestion/load_uci_credit_card.py',
+        NULL,
+        'validated'
+    );
+    PERFORM meta.register_edge(
+        c_scope,
+        v_loader_node_id,
+        v_source_node_id,
+        'computed_from',
+        c_valid_from,
+        NULL,
+        NULL,
+        'data/raw/default of credit card clients.xls',
         NULL,
         'validated'
     );

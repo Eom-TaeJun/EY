@@ -73,21 +73,27 @@ Edge types:
 Adding a type requires a decision-ledger entry and the applicable approval;
 free-text types are not a bypass.
 
-## Edge direction
+## Edge direction and families
 
 - Economic transmission follows causal time: upstream shock or constraint
   points to the downstream behavior, signal, or risk component.
-- Data-lineage dependency relations point from the downstream object to its
-  immediate dependency. For example, `Result → Query` and
-  `Artifact → Result` use `computed_from`. This makes a final
-  claim-to-source dependency trace a forward walk.
-- Relations whose verb defines the opposite direction retain their literal
-  meaning. For example, `Result → Artifact` uses `reported_in`; it must not be
-  reversed merely to fit the dependency walk.
-- Impact analysis walks dependency relations in reverse, from an upstream
-  source or field to downstream results and artifacts. Test-impact queries can
-  additionally follow `Test → Result` through `fails` or `validated_by`,
-  according to the registered relation.
+- Producer-flow lineage records how work moved operationally from an upstream
+  producer to a downstream consumer. Wave 1 retains `transformed_by`,
+  `supports`, and `reported_in` edges such as `Source → Loader`,
+  `Query → Feature`, and `Result → Artifact`. These historical edges are useful
+  for impact analysis, but are not the claim-to-source query contract.
+- Dependency lineage points from a downstream object to its immediate
+  dependency. Wave 1 uses `computed_from` for data/code dependencies and
+  `validated_by` for `Result → Test`. The complete query direction is
+  `Artifact → Result → Test → Query → Feature → Query → Core table →
+  Transformation → Raw table → Loader → Source`.
+- A claim-to-source traversal must follow only dependency-family edge types
+  `computed_from` and `validated_by`. Mixing producer-flow types into that walk
+  can reverse direction or introduce cycles because both edge families are
+  intentionally retained.
+- Upstream-to-downstream impact analysis can either reverse the dependency
+  family or follow the producer-flow family. The selected family and direction
+  must be explicit in the query.
 
 ## Minimum Wave 1 lineage
 
@@ -97,9 +103,10 @@ free-text types are not a bypass.
 - signals to risk-band query
 - risk-band result to README claim
 
-These are target paths, not pre-approved records. Actual `Result`, `Run`, and
-`Artifact` nodes must be registered only after the upstream run has passed its
-required validation gate. This DDL intentionally seeds no graph data.
+Actual `Result`, `Run`, and `Artifact` nodes must be registered only after the
+upstream run has passed its required validation gate. The base graph DDL seeds
+no data. `sql/ddl/031_wave1_lineage.sql` adds the independently validated Wave
+1 path while retaining its producer-flow history.
 
 ## Query paths
 
@@ -125,13 +132,11 @@ WITH RECURSIVE lineage AS (
         lineage.visited || upstream.node_id
     FROM lineage
     JOIN meta.edge AS e
-      ON e.graph_scope = 'data_lineage'
+     ON e.graph_scope = 'data_lineage'
      AND e.from_node_id = lineage.node_id
      AND e.edge_type IN (
          'computed_from',
-         'transformed_by',
-         'constrained_by',
-         'supports'
+         'validated_by'
      )
     JOIN meta.node AS upstream
       ON upstream.graph_scope = e.graph_scope
@@ -147,7 +152,8 @@ FROM lineage
 ORDER BY depth, node_id;
 ```
 
-The caller must bind `start_node_id` and a bounded `max_depth`; this is not an
+The caller must bind `start_node_id` and a bounded `max_depth`; Wave 1 requires
+at least depth 10 for the registered Artifact-to-Source path. This is not an
 unrestricted natural-language SQL interface. A visual graph is optional, while
 the queryable PostgreSQL lineage is mandatory.
 
@@ -158,6 +164,14 @@ Apply the DDL and run:
 ```bash
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f sql/ddl/030_meta_graph.sql
 psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -f tests/graph/test_meta_graph.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 \
+  -v run_id=W1-20260727-001 \
+  -v source_sha256=30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933 \
+  -f sql/ddl/031_wave1_lineage.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 \
+  -v run_id=W1-20260727-001 \
+  -v source_sha256=30c6be3abd8dcfd3e6096c828bad8c2f011238620f5369220bd60cfc82700933 \
+  -f tests/graph/test_wave1_lineage_path.sql
 ```
 
 The test transaction verifies:
@@ -169,3 +183,10 @@ The test transaction verifies:
 - lineage sign/lag semantics fail;
 - negative economic lag, self-loops, and approved edges without evidence fail;
 - fixtures are rolled back.
+
+The Wave 1 path test additionally verifies:
+
+- every one of the seven validated Feature nodes has the exact bounded
+  Artifact-to-Source dependency path;
+- the path uses only `computed_from` and `validated_by`;
+- all edge scopes equal both endpoint scopes, so no cross-scope row exists.

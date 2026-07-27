@@ -18,6 +18,7 @@ VALIDATION = (
     / "latest"
     / "wave1_independent_validation.json"
 )
+PATH_TEST_SQL = ROOT / "tests" / "graph" / "test_wave1_lineage_path.sql"
 EXPECTED_FEATURES = {
     "recent_max_delinquency",
     "delinquent_months_6m",
@@ -96,3 +97,43 @@ def test_lineage_uses_only_data_lineage_and_existing_repository_paths() -> None:
     for relative_path in required_paths:
         assert (ROOT / relative_path).is_file()
         assert relative_path in sql
+
+
+def test_lineage_adds_a_complete_downstream_to_dependency_edge_family() -> None:
+    sql = LINEAGE_SQL.read_text(encoding="utf-8")
+    fixed_edges = set(
+        re.findall(
+            r"PERFORM meta\.register_edge\(\s*"
+            r"c_scope,\s*"
+            r"(v_[a-z0-9_]+),\s*"
+            r"(v_[a-z0-9_]+),\s*"
+            r"'([a-z_]+)'",
+            sql,
+            flags=re.DOTALL,
+        )
+    )
+    required_fixed_edges = {
+        ("v_artifact_node_id", "v_result_node_id", "computed_from"),
+        ("v_result_node_id", "v_validation_test_node_id", "validated_by"),
+        ("v_validation_test_node_id", "v_summary_query_node_id", "computed_from"),
+        ("v_signal_query_node_id", "v_borrower_table_node_id", "computed_from"),
+        ("v_signal_query_node_id", "v_account_month_table_node_id", "computed_from"),
+        ("v_borrower_table_node_id", "v_core_transform_node_id", "computed_from"),
+        ("v_account_month_table_node_id", "v_core_transform_node_id", "computed_from"),
+        ("v_core_transform_node_id", "v_raw_table_node_id", "computed_from"),
+        ("v_raw_table_node_id", "v_loader_node_id", "computed_from"),
+        ("v_loader_node_id", "v_source_node_id", "computed_from"),
+    }
+
+    assert required_fixed_edges <= fixed_edges
+    assert (
+        "v_summary_query_node_id,\n"
+        "            v_feature_node_id,\n"
+        "            'computed_from'"
+    ) in sql
+    assert (
+        "v_feature_node_id,\n"
+        "            v_signal_query_node_id,\n"
+        "            'computed_from'"
+    ) in sql
+    assert PATH_TEST_SQL.is_file()
