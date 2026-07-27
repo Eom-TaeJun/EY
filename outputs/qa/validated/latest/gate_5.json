@@ -1,0 +1,49 @@
+{
+  "schema_version": "1.0",
+  "gate": 5,
+  "run_id": "W1-20260727-001",
+  "generated_at": "2026-07-27T13:09:03.110578+00:00",
+  "producer": {
+    "role": "Validation",
+    "command": "python -m src.validation.wave1_office_validation --office-manifest <manifest> --validation <validation> --claim-manifest <claims> --evidence-map <map> --output <report> --gate-output <gate_5.json>"
+  },
+  "status": "pass",
+  "checks": [
+    {
+      "check_id": "shared_run_id",
+      "status": "pass",
+      "evidence": {
+        "distinct_run_id_count": 1,
+        "run_id": "W1-20260727-001",
+        "artifact_count": 3
+      }
+    },
+    {
+      "check_id": "cross_artifact_values",
+      "status": "pass",
+      "evidence": {
+        "mismatch_count": 0,
+        "artifact_count": 3,
+        "office_manifest": "outputs/final/wave1_office_manifest__W1-20260727-001.json"
+      }
+    },
+    {
+      "check_id": "limitations",
+      "status": "pass",
+      "evidence": {
+        "documented": true,
+        "limitation_count": 6,
+        "human_publication_approval": "pending"
+      }
+    },
+    {
+      "check_id": "evidence_map",
+      "status": "pass",
+      "evidence": {
+        "unresolved_claim_count": 0,
+        "claim_count": 6,
+        "evidence_map": "docs/final/evidence_map.md"
+      }
+    }
+  ]
+}
