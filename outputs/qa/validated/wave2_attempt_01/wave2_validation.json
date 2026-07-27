@@ -1,0 +1,1042 @@
+{
+  "schema_version": "1.0",
+  "run_id": "W2-PD-20260727-001",
+  "definition_version": "0.2.0",
+  "generated_at": "2026-07-27T12:54:47.229152+00:00",
+  "status": "fail",
+  "gate_4_eligible": false,
+  "approval": "not_granted",
+  "issues": [
+    {
+      "code": "time_direction_unavailable",
+      "path": "$.validation_design.genuine_time_direction",
+      "message": "Gate 4 is blocked: the source has no borrower-level observation timestamp, so a stable ID split is not genuine time-direction validation"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.static.metrics.test.calibration_intercept",
+      "message": "reported 0.00593466007807647 does not match independent value 0.0054473725070094264"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.static.metrics.test.calibration_slope",
+      "message": "reported 1.0118998118750826 does not match independent value 1.0115645641757753"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.behavioral.metrics.test.calibration_intercept",
+      "message": "reported -0.08328566233942135 does not match independent value -0.08313939701918206"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.behavioral.metrics.test.calibration_slope",
+      "message": "reported 0.9188483599084403 does not match independent value 0.9189726546634492"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.combined.metrics.test.calibration_intercept",
+      "message": "reported -0.08888195847844728 does not match independent value -0.08875019705769839"
+    },
+    {
+      "code": "reported_metric_mismatch",
+      "path": "$.models.combined.metrics.test.calibration_slope",
+      "message": "reported 0.9205791061107934 does not match independent value 0.9206949311008379"
+    },
+    {
+      "code": "sensitivity_unavailable",
+      "path": "$.component_scope.scenario_sensitivity",
+      "message": "Gate 4 sensitivity-direction evidence is unavailable; no approved scenario or behavioral shock values are present"
+    }
+  ],
+  "checks": [
+    {
+      "check_id": "population_and_split_integrity",
+      "status": "pass",
+      "evidence": {
+        "population_count": 30000,
+        "expected_population_count": 30000,
+        "split_counts": {
+          "train": 18000,
+          "calibration": 6000,
+          "test": 6000
+        }
+      }
+    },
+    {
+      "check_id": "time_direction",
+      "status": "blocked",
+      "evidence": {
+        "genuine_time_direction": false,
+        "temporal_gate_eligible": false
+      }
+    },
+    {
+      "check_id": "observation_timing_and_leakage",
+      "status": "pass",
+      "evidence": {
+        "allowlists": "$.feature_controls.allowlists",
+        "exclusions": "$.feature_controls.excluded_features",
+        "leakage_controls": "$.leakage_controls"
+      }
+    },
+    {
+      "check_id": "proxy_labels_and_component_scope",
+      "status": "pass",
+      "evidence": {
+        "required_not_estimated": [
+          "stage",
+          "ead",
+          "lgd",
+          "ecl"
+        ]
+      }
+    },
+    {
+      "check_id": "prediction_population_reconciliation",
+      "status": "pass",
+      "evidence": {
+        "expected_test_count": 6000,
+        "model_prediction_counts": {
+          "static": 6000,
+          "behavioral": 6000,
+          "combined": 6000
+        }
+      }
+    },
+    {
+      "check_id": "probability_bounds_and_duplicates",
+      "status": "pass",
+      "evidence": {
+        "bounds": "[0, 1]",
+        "models_checked": [
+          "behavioral",
+          "combined",
+          "static"
+        ]
+      }
+    },
+    {
+      "check_id": "independent_metric_recalculation",
+      "status": "fail",
+      "evidence": {
+        "models_recomputed": [
+          "behavioral",
+          "combined",
+          "static"
+        ],
+        "calibration_bin_count": 10,
+        "metric_tolerance": 1e-10
+      }
+    },
+    {
+      "check_id": "segment_stability",
+      "status": "pass",
+      "evidence": {
+        "segment_fields": [
+          "sex_code",
+          "education_code",
+          "marriage_code",
+          "age_band",
+          "risk_band"
+        ],
+        "model_segment_counts": {
+          "static": 21,
+          "behavioral": 21,
+          "combined": 21
+        }
+      }
+    },
+    {
+      "check_id": "model_run_version_consistency",
+      "status": "pass",
+      "evidence": {
+        "model_run_id": "W2-PD-20260727-001",
+        "model_definition_version": "0.2.0",
+        "models_checked": [
+          "static",
+          "behavioral",
+          "combined"
+        ]
+      }
+    }
+  ],
+  "recomputed_metrics": {
+    "static": {
+      "sample_count": 6000,
+      "default_count": 1332,
+      "default_rate": 0.222,
+      "average_pd": 0.2233805668939472,
+      "roc_auc": 0.6346004584275793,
+      "pr_auc": 0.32089579987003203,
+      "brier_score": 0.16599978968401183,
+      "log_loss": 0.5099521077323448,
+      "expected_calibration_error_10_bin": 0.00710262865246385,
+      "test_calibration_intercept": 0.0054473725070094264,
+      "test_calibration_slope": 1.0115645641757753,
+      "calibration_bins": [
+        {
+          "bin": 1,
+          "lower_bound": 0.0,
+          "upper_bound": 0.1,
+          "sample_count": 87,
+          "default_count": 4,
+          "average_pd": 0.0637781590327488,
+          "observed_default_rate": 0.04597701149425287
+        },
+        {
+          "bin": 2,
+          "lower_bound": 0.1,
+          "upper_bound": 0.2,
+          "sample_count": 2781,
+          "default_count": 431,
+          "average_pd": 0.16012644884391783,
+          "observed_default_rate": 0.154980222941388
+        },
+        {
+          "bin": 3,
+          "lower_bound": 0.2,
+          "upper_bound": 0.3,
+          "sample_count": 2073,
+          "default_count": 522,
+          "average_pd": 0.24352813059548967,
+          "observed_default_rate": 0.25180897250361794
+        },
+        {
+          "bin": 4,
+          "lower_bound": 0.3,
+          "upper_bound": 0.4,
+          "sample_count": 835,
+          "default_count": 280,
+          "average_pd": 0.34220185287364274,
+          "observed_default_rate": 0.33532934131736525
+        },
+        {
+          "bin": 5,
+          "lower_bound": 0.4,
+          "upper_bound": 0.5,
+          "sample_count": 203,
+          "default_count": 87,
+          "average_pd": 0.43360215563327664,
+          "observed_default_rate": 0.42857142857142855
+        },
+        {
+          "bin": 6,
+          "lower_bound": 0.5,
+          "upper_bound": 0.6,
+          "sample_count": 21,
+          "default_count": 8,
+          "average_pd": 0.5156879916857952,
+          "observed_default_rate": 0.38095238095238093
+        }
+      ]
+    },
+    "behavioral": {
+      "sample_count": 6000,
+      "default_count": 1332,
+      "default_rate": 0.222,
+      "average_pd": 0.22048717193479656,
+      "roc_auc": 0.7406604869651142,
+      "pr_auc": 0.4881437921878834,
+      "brier_score": 0.14481873436233555,
+      "log_loss": 0.4573602593042097,
+      "expected_calibration_error_10_bin": 0.015284196115816266,
+      "test_calibration_intercept": -0.08313939701918206,
+      "test_calibration_slope": 0.9189726546634492,
+      "calibration_bins": [
+        {
+          "bin": 1,
+          "lower_bound": 0.0,
+          "upper_bound": 0.1,
+          "sample_count": 994,
+          "default_count": 85,
+          "average_pd": 0.09560235837699538,
+          "observed_default_rate": 0.08551307847082495
+        },
+        {
+          "bin": 2,
+          "lower_bound": 0.1,
+          "upper_bound": 0.2,
+          "sample_count": 3171,
+          "default_count": 424,
+          "average_pd": 0.12948670391241215,
+          "observed_default_rate": 0.1337117628508357
+        },
+        {
+          "bin": 3,
+          "lower_bound": 0.2,
+          "upper_bound": 0.3,
+          "sample_count": 437,
+          "default_count": 113,
+          "average_pd": 0.24764105131164035,
+          "observed_default_rate": 0.2585812356979405
+        },
+        {
+          "bin": 4,
+          "lower_bound": 0.3,
+          "upper_bound": 0.4,
+          "sample_count": 482,
+          "default_count": 194,
+          "average_pd": 0.34889092164425295,
+          "observed_default_rate": 0.4024896265560166
+        },
+        {
+          "bin": 5,
+          "lower_bound": 0.4,
+          "upper_bound": 0.5,
+          "sample_count": 284,
+          "default_count": 126,
+          "average_pd": 0.44698086526577147,
+          "observed_default_rate": 0.44366197183098594
+        },
+        {
+          "bin": 6,
+          "lower_bound": 0.5,
+          "upper_bound": 0.6,
+          "sample_count": 248,
+          "default_count": 141,
+          "average_pd": 0.5428307487700212,
+          "observed_default_rate": 0.5685483870967742
+        },
+        {
+          "bin": 7,
+          "lower_bound": 0.6,
+          "upper_bound": 0.7,
+          "sample_count": 195,
+          "default_count": 124,
+          "average_pd": 0.6604340457417611,
+          "observed_default_rate": 0.6358974358974359
+        },
+        {
+          "bin": 8,
+          "lower_bound": 0.7,
+          "upper_bound": 0.8,
+          "sample_count": 104,
+          "default_count": 67,
+          "average_pd": 0.7339453557107108,
+          "observed_default_rate": 0.6442307692307693
+        },
+        {
+          "bin": 9,
+          "lower_bound": 0.8,
+          "upper_bound": 0.9,
+          "sample_count": 61,
+          "default_count": 41,
+          "average_pd": 0.8398765598303201,
+          "observed_default_rate": 0.6721311475409836
+        },
+        {
+          "bin": 10,
+          "lower_bound": 0.9,
+          "upper_bound": 1.0,
+          "sample_count": 24,
+          "default_count": 17,
+          "average_pd": 0.9581403386008002,
+          "observed_default_rate": 0.7083333333333334
+        }
+      ]
+    },
+    "combined": {
+      "sample_count": 6000,
+      "default_count": 1332,
+      "default_rate": 0.222,
+      "average_pd": 0.2218116100641695,
+      "roc_auc": 0.7544955784833677,
+      "pr_auc": 0.49465115327864084,
+      "brier_score": 0.1438253297414684,
+      "log_loss": 0.45337585030147104,
+      "expected_calibration_error_10_bin": 0.012110697948014195,
+      "test_calibration_intercept": -0.08875019705769839,
+      "test_calibration_slope": 0.9206949311008379,
+      "calibration_bins": [
+        {
+          "bin": 1,
+          "lower_bound": 0.0,
+          "upper_bound": 0.1,
+          "sample_count": 1212,
+          "default_count": 98,
+          "average_pd": 0.08566077532863679,
+          "observed_default_rate": 0.08085808580858085
+        },
+        {
+          "bin": 2,
+          "lower_bound": 0.1,
+          "upper_bound": 0.2,
+          "sample_count": 2905,
+          "default_count": 403,
+          "average_pd": 0.13412624035313694,
+          "observed_default_rate": 0.1387263339070568
+        },
+        {
+          "bin": 3,
+          "lower_bound": 0.2,
+          "upper_bound": 0.3,
+          "sample_count": 494,
+          "default_count": 127,
+          "average_pd": 0.24402055740330073,
+          "observed_default_rate": 0.25708502024291496
+        },
+        {
+          "bin": 4,
+          "lower_bound": 0.3,
+          "upper_bound": 0.4,
+          "sample_count": 427,
+          "default_count": 165,
+          "average_pd": 0.3483989990941922,
+          "observed_default_rate": 0.3864168618266979
+        },
+        {
+          "bin": 5,
+          "lower_bound": 0.4,
+          "upper_bound": 0.5,
+          "sample_count": 314,
+          "default_count": 140,
+          "average_pd": 0.44775198960782964,
+          "observed_default_rate": 0.445859872611465
+        },
+        {
+          "bin": 6,
+          "lower_bound": 0.5,
+          "upper_bound": 0.6,
+          "sample_count": 246,
+          "default_count": 136,
+          "average_pd": 0.5494043908624084,
+          "observed_default_rate": 0.5528455284552846
+        },
+        {
+          "bin": 7,
+          "lower_bound": 0.6,
+          "upper_bound": 0.7,
+          "sample_count": 191,
+          "default_count": 123,
+          "average_pd": 0.6535196881339423,
+          "observed_default_rate": 0.643979057591623
+        },
+        {
+          "bin": 8,
+          "lower_bound": 0.7,
+          "upper_bound": 0.8,
+          "sample_count": 125,
+          "default_count": 82,
+          "average_pd": 0.7385095472571678,
+          "observed_default_rate": 0.656
+        },
+        {
+          "bin": 9,
+          "lower_bound": 0.8,
+          "upper_bound": 0.9,
+          "sample_count": 63,
+          "default_count": 42,
+          "average_pd": 0.8461120808516148,
+          "observed_default_rate": 0.6666666666666666
+        },
+        {
+          "bin": 10,
+          "lower_bound": 0.9,
+          "upper_bound": 1.0,
+          "sample_count": 23,
+          "default_count": 16,
+          "average_pd": 0.9526488985653955,
+          "observed_default_rate": 0.6956521739130435
+        }
+      ]
+    }
+  },
+  "model_comparison": {
+    "behavioral_minus_static": {
+      "roc_auc_difference": 0.10606002853753493,
+      "pr_auc_difference": 0.16724799231785137,
+      "brier_score_difference": -0.021181055321676273,
+      "log_loss_difference": -0.05259184842813508,
+      "ece_difference": 0.008181567463352416
+    },
+    "combined_minus_static": {
+      "roc_auc_difference": 0.1198951200557884,
+      "pr_auc_difference": 0.17375535340860881,
+      "brier_score_difference": -0.02217445994254344,
+      "log_loss_difference": -0.056576257430873744,
+      "ece_difference": 0.005008069295550345
+    },
+    "combined_minus_behavioral": {
+      "roc_auc_difference": 0.013835091518253462,
+      "pr_auc_difference": 0.006507361090757446,
+      "brier_score_difference": -0.0009934046208671665,
+      "log_loss_difference": -0.003984409002738665,
+      "ece_difference": -0.003173498167802071
+    }
+  },
+  "segment_stability": {
+    "static": [
+      {
+        "segment_field": "sex_code",
+        "segment_value": "1",
+        "sample_count": 2396,
+        "default_count": 589,
+        "default_rate": 0.24582637729549248,
+        "average_pd": 0.24571754031020066,
+        "brier_score": 0.17857915114306624
+      },
+      {
+        "segment_field": "sex_code",
+        "segment_value": "2",
+        "sample_count": 3604,
+        "default_count": 743,
+        "default_rate": 0.20615982241953384,
+        "average_pd": 0.20853057013885748,
+        "brier_score": 0.15763681797038961
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "0",
+        "sample_count": 4,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.10566096155671645,
+        "brier_score": 0.011451807438183652
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "1",
+        "sample_count": 2103,
+        "default_count": 394,
+        "default_rate": 0.1873514027579648,
+        "average_pd": 0.193268367181602,
+        "brier_score": 0.14926307295680444
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "2",
+        "sample_count": 2762,
+        "default_count": 665,
+        "default_rate": 0.24076755973931932,
+        "average_pd": 0.23980580801441112,
+        "brier_score": 0.17635944554504515
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "3",
+        "sample_count": 1032,
+        "default_count": 268,
+        "default_rate": 0.2596899224806202,
+        "average_pd": 0.2549849678716852,
+        "brier_score": 0.1839791553838418
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "4",
+        "sample_count": 32,
+        "default_count": 2,
+        "default_rate": 0.0625,
+        "average_pd": 0.05267872948285102,
+        "brier_score": 0.05817306765085719
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "5",
+        "sample_count": 59,
+        "default_count": 3,
+        "default_rate": 0.05084745762711865,
+        "average_pd": 0.07936777589959158,
+        "brier_score": 0.048894709015677766
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "6",
+        "sample_count": 8,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.19510432920469467,
+        "brier_score": 0.041885687233330145
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "0",
+        "sample_count": 7,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.102946450049443,
+        "brier_score": 0.011634633486021367
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "1",
+        "sample_count": 2746,
+        "default_count": 643,
+        "default_rate": 0.23415877640203933,
+        "average_pd": 0.23601402726373966,
+        "brier_score": 0.17114776860046266
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "2",
+        "sample_count": 3174,
+        "default_count": 670,
+        "default_rate": 0.21109010712035287,
+        "average_pd": 0.21205102062728118,
+        "brier_score": 0.16146923753554618
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "3",
+        "sample_count": 73,
+        "default_count": 19,
+        "default_rate": 0.2602739726027397,
+        "average_pd": 0.2523057243303773,
+        "brier_score": 0.1841392213010241
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "30-39",
+        "sample_count": 2290,
+        "default_count": 466,
+        "default_rate": 0.2034934497816594,
+        "average_pd": 0.20614765922729844,
+        "brier_score": 0.15530811634228187
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "40-49",
+        "sample_count": 1289,
+        "default_count": 311,
+        "default_rate": 0.24127230411171452,
+        "average_pd": 0.23274980826181169,
+        "brier_score": 0.17448986323805568
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "50-59",
+        "sample_count": 468,
+        "default_count": 99,
+        "default_rate": 0.21153846153846154,
+        "average_pd": 0.2535245623448428,
+        "brier_score": 0.16626659634827065
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "60+",
+        "sample_count": 66,
+        "default_count": 20,
+        "default_rate": 0.30303030303030304,
+        "average_pd": 0.25302553501641845,
+        "brier_score": 0.21749658745620906
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "<30",
+        "sample_count": 1887,
+        "default_count": 436,
+        "default_rate": 0.23105458399576045,
+        "average_pd": 0.22938080466095626,
+        "brier_score": 0.17130798945590417
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "High",
+        "sample_count": 1393,
+        "default_count": 689,
+        "default_rate": 0.4946159368269921,
+        "average_pd": 0.2651230439397991,
+        "brier_score": 0.30198176956680534
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Low",
+        "sample_count": 2987,
+        "default_count": 359,
+        "default_rate": 0.12018747907599599,
+        "average_pd": 0.20618369322426336,
+        "brier_score": 0.11412738721708357
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Medium",
+        "sample_count": 1620,
+        "default_count": 284,
+        "default_rate": 0.17530864197530865,
+        "average_pd": 0.2191952527744867,
+        "brier_score": 0.14471581943214967
+      }
+    ],
+    "behavioral": [
+      {
+        "segment_field": "sex_code",
+        "segment_value": "1",
+        "sample_count": 2396,
+        "default_count": 589,
+        "default_rate": 0.24582637729549248,
+        "average_pd": 0.23383954596256504,
+        "brier_score": 0.15582917569771934
+      },
+      {
+        "segment_field": "sex_code",
+        "segment_value": "2",
+        "sample_count": 3604,
+        "default_count": 743,
+        "default_rate": 0.20615982241953384,
+        "average_pd": 0.21161028842465973,
+        "brier_score": 0.13749880721483845
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "0",
+        "sample_count": 4,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.17425711688214185,
+        "brier_score": 0.03737769963499113
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "1",
+        "sample_count": 2103,
+        "default_count": 394,
+        "default_rate": 0.1873514027579648,
+        "average_pd": 0.19964474667938362,
+        "brier_score": 0.1244398704027688
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "2",
+        "sample_count": 2762,
+        "default_count": 665,
+        "default_rate": 0.24076755973931932,
+        "average_pd": 0.2306447307231525,
+        "brier_score": 0.15692358360740682
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "3",
+        "sample_count": 1032,
+        "default_count": 268,
+        "default_rate": 0.2596899224806202,
+        "average_pd": 0.2419263204414661,
+        "brier_score": 0.16278463469261648
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "4",
+        "sample_count": 32,
+        "default_count": 2,
+        "default_rate": 0.0625,
+        "average_pd": 0.13630902799399072,
+        "brier_score": 0.06416449166542143
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "5",
+        "sample_count": 59,
+        "default_count": 3,
+        "default_rate": 0.05084745762711865,
+        "average_pd": 0.16627519599343918,
+        "brier_score": 0.05457385139254382
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "6",
+        "sample_count": 8,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.18653330776829238,
+        "brier_score": 0.04700575331989626
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "0",
+        "sample_count": 7,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.26506413944558116,
+        "brier_score": 0.13007444263152917
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "1",
+        "sample_count": 2746,
+        "default_count": 643,
+        "default_rate": 0.23415877640203933,
+        "average_pd": 0.2180124871048619,
+        "brier_score": 0.1529312200318413
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "2",
+        "sample_count": 3174,
+        "default_count": 670,
+        "default_rate": 0.21109010712035287,
+        "average_pd": 0.22194940026167734,
+        "brier_score": 0.1381447022334536
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "3",
+        "sample_count": 73,
+        "default_count": 19,
+        "default_rate": 0.2602739726027397,
+        "average_pd": 0.2457246111252836,
+        "brier_score": 0.131253013413352
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "30-39",
+        "sample_count": 2290,
+        "default_count": 466,
+        "default_rate": 0.2034934497816594,
+        "average_pd": 0.2085424162603961,
+        "brier_score": 0.13609586242105745
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "40-49",
+        "sample_count": 1289,
+        "default_count": 311,
+        "default_rate": 0.24127230411171452,
+        "average_pd": 0.22049580274554267,
+        "brier_score": 0.1526364356221379
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "50-59",
+        "sample_count": 468,
+        "default_count": 99,
+        "default_rate": 0.21153846153846154,
+        "average_pd": 0.21677342824044235,
+        "brier_score": 0.14314517538018476
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "60+",
+        "sample_count": 66,
+        "default_count": 20,
+        "default_rate": 0.30303030303030304,
+        "average_pd": 0.2294457287186313,
+        "brier_score": 0.19769328320239227
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "<30",
+        "sample_count": 1887,
+        "default_count": 436,
+        "default_rate": 0.23105458399576045,
+        "average_pd": 0.23558475152173355,
+        "brier_score": 0.1486300036796882
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "High",
+        "sample_count": 1393,
+        "default_count": 689,
+        "default_rate": 0.4946159368269921,
+        "average_pd": 0.4994032161925852,
+        "brier_score": 0.23828718347200928
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Low",
+        "sample_count": 2987,
+        "default_count": 359,
+        "default_rate": 0.12018747907599599,
+        "average_pd": 0.11784704757072352,
+        "brier_score": 0.10451342655575753
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Medium",
+        "sample_count": 1620,
+        "default_count": 284,
+        "default_rate": 0.17530864197530865,
+        "average_pd": 0.16990445701157847,
+        "brier_score": 0.13876342868855346
+      }
+    ],
+    "combined": [
+      {
+        "segment_field": "sex_code",
+        "segment_value": "1",
+        "sample_count": 2396,
+        "default_count": 589,
+        "default_rate": 0.24582637729549248,
+        "average_pd": 0.24506727300579514,
+        "brier_score": 0.15464662526626471
+      },
+      {
+        "segment_field": "sex_code",
+        "segment_value": "2",
+        "sample_count": 3604,
+        "default_count": 743,
+        "default_rate": 0.20615982241953384,
+        "average_pd": 0.2063508530141875,
+        "brier_score": 0.13663114991976694
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "0",
+        "sample_count": 4,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.11552656695058644,
+        "brier_score": 0.01601515115223258
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "1",
+        "sample_count": 2103,
+        "default_count": 394,
+        "default_rate": 0.1873514027579648,
+        "average_pd": 0.1931019136738443,
+        "brier_score": 0.1245513585059268
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "2",
+        "sample_count": 2762,
+        "default_count": 665,
+        "default_rate": 0.24076755973931932,
+        "average_pd": 0.23758457758458096,
+        "brier_score": 0.1554902183491665
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "3",
+        "sample_count": 1032,
+        "default_count": 268,
+        "default_rate": 0.2596899224806202,
+        "average_pd": 0.2526174514062592,
+        "brier_score": 0.16151511401759644
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "4",
+        "sample_count": 32,
+        "default_count": 2,
+        "default_rate": 0.0625,
+        "average_pd": 0.046340135975609514,
+        "brier_score": 0.05828966215701642
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "5",
+        "sample_count": 59,
+        "default_count": 3,
+        "default_rate": 0.05084745762711865,
+        "average_pd": 0.06982245519990547,
+        "brier_score": 0.042007769713815354
+      },
+      {
+        "segment_field": "education_code",
+        "segment_value": "6",
+        "sample_count": 8,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.22525091415425824,
+        "brier_score": 0.05813781969254665
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "0",
+        "sample_count": 7,
+        "default_count": 0,
+        "default_rate": 0.0,
+        "average_pd": 0.1766745902607337,
+        "brier_score": 0.06721399582620488
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "1",
+        "sample_count": 2746,
+        "default_count": 643,
+        "default_rate": 0.23415877640203933,
+        "average_pd": 0.22994167119282574,
+        "brier_score": 0.1510464711859843
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "2",
+        "sample_count": 3174,
+        "default_count": 670,
+        "default_rate": 0.21109010712035287,
+        "average_pd": 0.21368844792146455,
+        "brier_score": 0.13807667456406048
+      },
+      {
+        "segment_field": "marriage_code",
+        "segment_value": "3",
+        "sample_count": 73,
+        "default_count": 19,
+        "default_rate": 0.2602739726027397,
+        "average_pd": 0.2735065130816974,
+        "brier_score": 0.12948637719159037
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "30-39",
+        "sample_count": 2290,
+        "default_count": 466,
+        "default_rate": 0.2034934497816594,
+        "average_pd": 0.2048268476654987,
+        "brier_score": 0.13473339153595237
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "40-49",
+        "sample_count": 1289,
+        "default_count": 311,
+        "default_rate": 0.24127230411171452,
+        "average_pd": 0.23172435961350205,
+        "brier_score": 0.15093259419663785
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "50-59",
+        "sample_count": 468,
+        "default_count": 99,
+        "default_rate": 0.21153846153846154,
+        "average_pd": 0.23738891220725747,
+        "brier_score": 0.1435906326365913
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "60+",
+        "sample_count": 66,
+        "default_count": 20,
+        "default_rate": 0.30303030303030304,
+        "average_pd": 0.2600483606358811,
+        "brier_score": 0.19521233741807054
+      },
+      {
+        "segment_field": "age_band",
+        "segment_value": "<30",
+        "sample_count": 1887,
+        "default_count": 436,
+        "default_rate": 0.23105458399576045,
+        "average_pd": 0.23045165711407326,
+        "brier_score": 0.14826495366639947
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "High",
+        "sample_count": 1393,
+        "default_count": 689,
+        "default_rate": 0.4946159368269921,
+        "average_pd": 0.5030629782081375,
+        "brier_score": 0.23784526243171483
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Low",
+        "sample_count": 2987,
+        "default_count": 359,
+        "default_rate": 0.12018747907599599,
+        "average_pd": 0.11946927551352589,
+        "brier_score": 0.10365207812589611
+      },
+      {
+        "segment_field": "risk_band",
+        "segment_value": "Medium",
+        "sample_count": 1620,
+        "default_count": 284,
+        "default_rate": 0.17530864197530865,
+        "average_pd": 0.16867173196430837,
+        "brier_score": 0.13705232748109875
+      }
+    ]
+  }
+}
