@@ -1,0 +1,55 @@
+schema_version: "1.0"
+policy: deterministic_allowlist
+natural_language_sql: prohibited
+numerical_authority: validated_artifact_only
+
+sources:
+  source_registry:
+    path: docs/data/source_registry.md
+    evidence_status: approved_definition
+  data_dictionary:
+    path: docs/data/data_dictionary.md
+    evidence_status: approved_definition
+  signal_dictionary:
+    path: docs/methodology/signal_dictionary.md
+    evidence_status: approved_definition
+  test_catalog:
+    path: docs/validation/test_catalog.md
+    evidence_status: approved_control
+  decision_ledger:
+    path: docs/governance/decision_ledger.md
+    evidence_status: accepted_decision
+  issue_log:
+    path: docs/governance/issue_log.md
+    evidence_status: governed_issue
+  work_status:
+    path: docs/governance/work_status.md
+    evidence_status: governed_status
+  runbook:
+    path: docs/wiki/runbook.md
+    evidence_status: approved_procedure
+  wave1_validation:
+    path: outputs/qa/validated/latest/wave1_independent_validation.json
+    evidence_status: validated_internal
+  wave2_blocked_validation:
+    path: outputs/qa/validated/wave2_attempt_02/wave2_validation.json
+    evidence_status: blocked
+  wave1_claim_manifest:
+    path: outputs/final/wave1_claim_manifest__W1-20260727-001.json
+    evidence_status: validated_internal_publication_pending
+
+excluded_paths:
+  - outputs/qa/wave1_independent_validation.json
+  - outputs/qa/wave1_snapshot.json
+  - outputs/qa/attempts/**
+  - outputs/qa/validated/wave2_attempt_01/**
+  - scratch/**
+  - notebooks/**
+
+questions:
+  - metric_calculation
+  - source_fields
+  - failed_test_impact
+  - report_consumers
+  - definition_rationale
+  - latest_run_changes
