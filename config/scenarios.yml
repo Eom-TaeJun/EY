@@ -1,10 +1,23 @@
-version: 0.1.0
-status: deferred
+version: 0.2.0
+status: deferred_pending_approved_assumptions
+model_definition_version: 0.2.0
+source_limit:
+  observation_structure: one_common_borrower_observation_date
+  macroeconomic_variables: unavailable
+  eligible_exposure_at_default: unavailable
+  recovery_and_collateral_cash_flows: unavailable
 scenarios:
   base:
-    description: Current observed behavior and approved baseline assumptions.
+    status: not_parameterized
+    description: Current observed behavior; no scenario multiplier is applied.
   downside:
-    description: Behavioral deterioration or future macro stress extension.
+    status: deferred
+    description: Requires approved behavioral or macro shock assumptions.
   severe_downside:
-    description: Severe but explainable sensitivity case.
-warning: Scenario values must be sourced or explicitly labeled as sensitivity assumptions.
+    status: deferred
+    description: Requires approved severe but explainable shock assumptions.
+controls:
+  - Scenario values must be sourced or explicitly labeled as sensitivity assumptions.
+  - Direction and magnitude must be approved before calculation.
+  - Scenario outputs cannot be described as IFRS 9 ECL without eligible PD, LGD, EAD, Stage, and weighting definitions.
+  - Gate 4 sensitivity direction remains blocked while all non-base scenarios are unparameterized.
