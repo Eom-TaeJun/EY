@@ -1,0 +1,10 @@
+version: 0.1.0
+status: deferred
+scenarios:
+  base:
+    description: Current observed behavior and approved baseline assumptions.
+  downside:
+    description: Behavioral deterioration or future macro stress extension.
+  severe_downside:
+    description: Severe but explainable sensitivity case.
+warning: Scenario values must be sourced or explicitly labeled as sensitivity assumptions.

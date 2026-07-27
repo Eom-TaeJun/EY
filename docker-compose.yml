@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: credit-risk-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-credit_risk_lab}
+      POSTGRES_USER: ${POSTGRES_USER:-credit_risk}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change_me}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - credit_risk_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-credit_risk} -d ${POSTGRES_DB:-credit_risk_lab}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  credit_risk_pgdata:

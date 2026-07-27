@@ -1,0 +1,15 @@
+project_id: credit-risk-signal-lab
+current_wave: wave_0_to_wave_1
+primary_audience:
+  - financial_risk_consulting_manager
+  - bank_credit_risk_practitioner
+  - recruiter
+decision_supported: >-
+  Whether the author can be trusted with data ingestion, SQL testing,
+  reconciliation, risk analysis, and project documentation.
+principles:
+  - preserve_sources
+  - deterministic_calculation
+  - independent_validation
+  - claim_to_evidence_traceability
+  - human_approval_for_material_decisions

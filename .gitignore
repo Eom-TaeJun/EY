@@ -1,0 +1,40 @@
+# Secrets and local settings
+.env
+CLAUDE.local.md
+.claude/settings.local.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Data: keep folders, not source or generated data
+/data/raw/*
+!/data/raw/.gitkeep
+/data/interim/*
+!/data/interim/.gitkeep
+/data/processed/*
+!/data/processed/.gitkeep
+
+# Outputs and logs
+/outputs/*
+!/outputs/.gitkeep
+/logs/*
+!/logs/.gitkeep
+
+# Local database and office temp files
+*.db
+*.sqlite
+*.xlsx~
+~$*.xlsx
+~$*.docx
+~$*.pptx
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

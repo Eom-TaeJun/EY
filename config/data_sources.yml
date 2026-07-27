@@ -1,0 +1,17 @@
+sources:
+  - source_id: uci_default_credit_card_clients
+    phase: wave_1
+    role: primary_mvp_dataset
+    status: planned
+    expected_rows: 30000
+    expected_history_months: 6
+    notes:
+      - Preserve the downloaded file and record its hash.
+      - Use it for PD-related behavioral risk signals only.
+      - Do not claim LGD, EAD, or full IFRS 9 reproduction.
+  - source_id: future_loan_performance_dataset
+    phase: wave_2_or_later
+    role: lgd_ead_and_macro_extension
+    status: deferred
+    notes:
+      - Must contain monthly performance and recovery or collateral information.

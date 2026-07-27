@@ -1,0 +1,25 @@
+version: 0.1.0
+outcome:
+  target_name: next_month_default
+  source_definition: dataset_provided_binary_target
+signals:
+  recent_max_delinquency:
+    status: planned
+    window_months: 3
+  delinquent_months:
+    status: planned
+    window_months: 6
+  delinquency_deterioration:
+    status: planned
+  latest_utilization_ratio:
+    status: planned
+  payment_coverage_ratio:
+    status: planned
+  zero_payment_streak:
+    status: planned
+  recent_bill_growth:
+    status: planned
+risk_band:
+  method: explainable_rule_first
+  thresholds: decision_required
+  warning: Do not select thresholds solely to maximize observed separation.

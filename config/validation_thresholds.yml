@@ -1,0 +1,13 @@
+version: 0.1.0
+reconciliation:
+  row_count_difference: 0
+  exact_amount_difference: 0
+  floating_amount_tolerance: 0.01
+quality:
+  primary_key_duplicate_count: 0
+  missing_required_field_count: 0
+model:
+  publication_requires_time_aware_validation: true
+  publication_requires_calibration_review: true
+change_control:
+  threshold_change_requires_human_approval: true
