@@ -1,7 +1,9 @@
 # Wiki and Handoff Index
 
-- `runbook.md` — how to set up, run, test, and recover
-- `handoff_guide.md` — what a new analyst needs to know
-- `issue_playbook.md` — how to investigate abnormal results
+- [`runbook.md`](runbook.md) — setup, controlled execution, reporting, and recovery
+- [`handoff_guide.md`](handoff_guide.md) — canonical evidence and analyst handoff
+- [`issue_playbook.md`](issue_playbook.md) — fail-closed investigation paths
 
-These files become approved RAG inputs in Wave 3. Scratch notes are not approved inputs.
+These pages contain procedures and definitions, not numerical authority. They
+become approved RAG inputs only through the Wave 3 indexing controls. Scratch
+notes and generated reports are not automatically approved inputs.

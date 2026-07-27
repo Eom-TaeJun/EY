@@ -1,0 +1,94 @@
+{
+  "claims": [
+    {
+      "claim": "The registered source reconciles exactly to the raw table.",
+      "claim_id": "W1-CLM-001",
+      "json_pointers": [
+        "$.gate_packets[gate=1].checks[check_id=raw_rows_reconciled]",
+        "$.verified_findings.source_rows",
+        "$.verified_findings.raw_rows"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "claim": "Borrower and six-month borrower-month populations reconcile.",
+      "claim_id": "W1-CLM-002",
+      "json_pointers": [
+        "$.gate_packets[gate=2].checks[check_id=wide_to_long_rows]",
+        "$.verified_findings.borrower_rows",
+        "$.verified_findings.account_month_rows"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "claim": "Wide and long bill and payment totals reconcile within the approved threshold.",
+      "claim_id": "W1-CLM-003",
+      "json_pointers": [
+        "$.gate_packets[gate=2].checks[check_id=bill_amounts]",
+        "$.gate_packets[gate=2].checks[check_id=payment_amounts]"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "claim": "The validated SQL test suite has no failed test.",
+      "claim_id": "W1-CLM-004",
+      "json_pointers": [
+        "$.gate_packets[gate=2].checks[check_id=sql_test_suite]",
+        "$.verified_findings.sql_test_count",
+        "$.verified_findings.sql_failed_count"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "claim": "Signal-bucket observed default rates use reconciled populations.",
+      "claim_id": "W1-CLM-005",
+      "json_pointers": [
+        "$.gate_packets[gate=3].checks[check_id=outcome_summary]",
+        "$.verified_findings.signal_outcomes"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    },
+    {
+      "claim": "Initial risk-band observed default rates use the same run.",
+      "claim_id": "W1-CLM-006",
+      "json_pointers": [
+        "$.gate_packets[gate=3].checks[check_id=outcome_summary]",
+        "$.verified_findings.risk_band_outcomes"
+      ],
+      "required_gate_status": "pass",
+      "run_id": "W1-20260727-001",
+      "validation_artifact": "outputs/qa/validated/latest/wave1_independent_validation.json",
+      "validation_artifact_sha256": "6a12eee57f22275a759f2493fbad5a3fb68aebfeea29ccd8fc5ba04299f2b4ce"
+    }
+  ],
+  "publication": {
+    "human_approval_required": true,
+    "required_gate": 5,
+    "status": "pending"
+  },
+  "rendering_notes": {
+    "percentage_display": "default_count / sample_count, rounded half up to 2 dp",
+    "visual_omission": "Wave 1 uses exact audit tables; charts remain deferred until publication-reviewed output exists."
+  },
+  "report_sha256": "8874fb51332b0dbf2c75493aef01a8dedde96e3dcf797eb43f438eb86a334656",
+  "report_type": "wave1_internal_evidence",
+  "run_id": "W1-20260727-001",
+  "schema_version": "1.0",
+  "signal_definition_version": "0.1.0",
+  "validation_generated_at": "2026-07-27T12:24:26.408112+00:00"
+}
